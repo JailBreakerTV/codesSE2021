@@ -41,7 +41,7 @@ public class GermanTranslator implements Translator {
         // [ihr Source Code aus Übung 1-2]
         try {
             return GERMAN_TRANSLATIONS.get(number - 1);
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (Throwable t) {
             return String.format(ERROR_MESSAGE, number, version);
         }
 
