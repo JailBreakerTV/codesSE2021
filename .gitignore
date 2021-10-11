@@ -137,7 +137,7 @@ buildNumber.properties
 .mvn/wrapper/maven-wrapper.jar
 .gradle
 **/build/
-!src/**/build/
+!test/**/build/
 gradle-app.setting
 !gradle-wrapper.jar
 .gradletasknamecache

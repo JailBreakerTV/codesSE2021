@@ -1,9 +1,7 @@
 package org.hbrs.se1.ws21.uebung1.control;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GermanTranslator implements Translator {
 //    Leichtere Variante zur Ermittlung der korrekten Übersetzung
