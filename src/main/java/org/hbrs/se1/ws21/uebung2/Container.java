@@ -1,10 +1,20 @@
 package org.hbrs.se1.ws21.uebung2;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Container {
+    private static final Container CONTAINER = new Container();
+
     private final List<Member> members = new ArrayList<>();
+
+    public static Container getContainer() {
+        return CONTAINER;
+    }
 
     public void addMember(Member member) throws ContainerException {
         if (this.hasMember(member.getID())) {

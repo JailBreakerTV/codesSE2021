@@ -15,7 +15,7 @@ public class ContainerTest {
 
     @BeforeEach
     public void loadMembers() {
-        this.container = new Container();
+        this.container = Container.getContainer();
         this.first = new MemberImpl(1);
         this.second = new MemberImpl(2);
         this.third = new MemberImpl(3);
