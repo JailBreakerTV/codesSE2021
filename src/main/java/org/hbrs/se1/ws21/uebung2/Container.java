@@ -1,6 +1,7 @@
 package org.hbrs.se1.ws21.uebung2;
 
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceException;
@@ -49,13 +50,12 @@ public class Container {
         return this.members.stream().anyMatch(member -> member.getID().equals(id));
     }
 
-    // Kurz erläutern welche Nachteile sich durch diesen Rückgabewert ergeben
     public boolean deleteMember(Integer id) {
         return this.members.removeIf(member -> member.getID().equals(id));
     }
 
-    public void dump() {
-        this.members.forEach(member -> System.out.println(member.toString()));
+    public List<Member> getCurrentList() {
+        return this.members;
     }
 
     public int size() {
