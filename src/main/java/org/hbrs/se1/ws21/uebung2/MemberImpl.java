@@ -1,8 +1,14 @@
 package org.hbrs.se1.ws21.uebung2;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class MemberImpl implements Member {
+public class MemberImpl implements Member, Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private final Integer id;
 
     public MemberImpl(Integer id) {
