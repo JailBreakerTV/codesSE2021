@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceException;
+import org.hbrs.se1.ws21.uebung3.persistence.PersistenceException.ExceptionType;
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceStrategy;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class Container {
 
     private final List<Member> members = new ArrayList<>();
 
+    @Getter
     @Setter
     private PersistenceStrategy<Member> strategy;
 
@@ -25,16 +27,19 @@ public class Container {
 
     public void store() throws PersistenceException {
         if (this.strategy == null) {
-            throw new NullPointerException("PersistenceStrategy is null");
+            throw new PersistenceException(ExceptionType.NoStrategyIsSet, "There is no strategy");
         }
         this.strategy.save(this.members);
     }
 
     public void load() throws PersistenceException {
         if (this.strategy == null) {
-            throw new NullPointerException("PersistenceStrategy is null");
+            throw new PersistenceException(ExceptionType.NoStrategyIsSet, "There is no strategy");
         }
         final List<Member> loadedMembers = this.strategy.load();
+        if (loadedMembers == null) {
+            throw new NullPointerException("Can not load Members (loadedMembers = null)");
+        }
         this.members.removeIf(member -> loadedMembers.stream().anyMatch(member::equals));
         this.members.addAll(loadedMembers);
     }
