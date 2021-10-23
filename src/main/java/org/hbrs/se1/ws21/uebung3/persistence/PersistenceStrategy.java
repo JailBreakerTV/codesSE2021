@@ -17,26 +17,22 @@ import java.util.List;
  */
 public interface PersistenceStrategy<E> {
     /**
-     * Method for opening the connection to a stream (here: Input- and Output-Stream)
-     * In case of having problems while opening the streams, leave the code in methods load
-     * and save
+     * This function should establish the connection to the persistence interface
      */
     void openConnection() throws PersistenceException;
 
     /**
-     * Method for closing the connections to a stream
+     * Method for closing the connections
      */
     void closeConnection() throws PersistenceException;
 
     /**
-     * Method for saving a list of Member-objects to a disk (HDD)
+     * Method for saving a list of generic objects to a disk (HDD)
      */
     void save(List<E> member) throws PersistenceException;
 
     /**
-     * Method for loading a list of Member-objects from a disk (HDD)
-     * Some coding examples come for free :-)
-     * Take also a look at the import statements above ;-!
+     * Method for loading a list of generic objects from a disk (HDD)
      */
     List<E> load() throws PersistenceException;
 }
