@@ -2,6 +2,7 @@ package org.hbrs.se1.ws21.uebung3.test;
 
 import org.hbrs.se1.ws21.uebung2.Container;
 import org.hbrs.se1.ws21.uebung2.Member;
+import org.hbrs.se1.ws21.uebung2.MemberContainer;
 import org.hbrs.se1.ws21.uebung2.MemberImpl;
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceException;
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceException.ExceptionType;
@@ -24,7 +25,7 @@ public class PersistenceTest {
 
     @BeforeEach
     public void init() {
-        this.container = Container.getContainer();
+        this.container = MemberContainer.getInstance();
         this.mongoStrategy = new PersistenceStrategyMongoDB<>();
         this.streamStrategy = new PersistenceStrategyStream<>();
     }

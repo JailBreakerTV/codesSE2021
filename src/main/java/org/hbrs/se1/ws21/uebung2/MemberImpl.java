@@ -4,13 +4,27 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * This class is an implementation of the member interface
+ */
 public class MemberImpl implements Member, Serializable {
 
+    /**
+     * The version of this member implementation
+     */
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * The id of this member
+     */
     private final Integer id;
 
+    /**
+     * This constructor instantiates the member with a given id
+     *
+     * @param id of this member
+     */
     public MemberImpl(Integer id) {
         this.id = id;
     }

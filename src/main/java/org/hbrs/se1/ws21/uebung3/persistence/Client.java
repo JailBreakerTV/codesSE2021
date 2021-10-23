@@ -1,10 +1,7 @@
 package org.hbrs.se1.ws21.uebung3.persistence;
 
 import lombok.RequiredArgsConstructor;
-import org.hbrs.se1.ws21.uebung2.Container;
-import org.hbrs.se1.ws21.uebung2.ContainerException;
-import org.hbrs.se1.ws21.uebung2.Member;
-import org.hbrs.se1.ws21.uebung2.MemberImpl;
+import org.hbrs.se1.ws21.uebung2.*;
 
 import java.util.List;
 
@@ -16,7 +13,7 @@ public final class Client implements Member {
         final Member first = new MemberImpl(1);
         final Member second = new MemberImpl(2);
         final Member third = new MemberImpl(3);
-        final Container<Member> container = Container.getContainer();
+        final Container<Member> container = MemberContainer.getInstance();
         container.addMember(first);
         container.addMember(second);
         container.addMember(third);

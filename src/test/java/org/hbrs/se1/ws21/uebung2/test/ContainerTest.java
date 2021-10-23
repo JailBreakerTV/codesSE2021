@@ -1,9 +1,6 @@
 package org.hbrs.se1.ws21.uebung2.test;
 
-import org.hbrs.se1.ws21.uebung2.Container;
-import org.hbrs.se1.ws21.uebung2.ContainerException;
-import org.hbrs.se1.ws21.uebung2.Member;
-import org.hbrs.se1.ws21.uebung2.MemberImpl;
+import org.hbrs.se1.ws21.uebung2.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +12,7 @@ public class ContainerTest {
 
     @BeforeEach
     public void loadMembers() {
-        this.container = Container.getContainer();
+        this.container = MemberContainer.getInstance();
         this.first = new MemberImpl(1);
         this.second = new MemberImpl(2);
         this.third = new MemberImpl(3);
