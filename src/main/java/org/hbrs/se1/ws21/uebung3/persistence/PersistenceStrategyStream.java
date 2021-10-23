@@ -42,6 +42,8 @@ public class PersistenceStrategyStream<Member> implements PersistenceStrategy<Me
             }
         } catch (InvalidPathException e) {
             throw new PersistenceException(OutputFilePathIsInvalid, e.getMessage());
+        } catch (NullPointerException e) {
+            throw new PersistenceException(OutputFilePathIsInvalid, e.getMessage());
         }
     }
 

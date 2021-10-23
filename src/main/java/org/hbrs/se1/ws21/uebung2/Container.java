@@ -10,18 +10,19 @@ import org.hbrs.se1.ws21.uebung3.persistence.PersistenceStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class Container {
-    private static final Container CONTAINER = new Container();
+public class Container<M extends IdAware> {
+    private static final Container<Member> CONTAINER = new Container<>();
 
-    private final List<Member> members = new ArrayList<>();
+    private final List<M> members = new ArrayList<>();
 
     @Getter
     @Setter
-    private PersistenceStrategy<Member> strategy;
+    private PersistenceStrategy<M> strategy;
 
-    public static Container getContainer() {
+    public static Container<Member> getContainer() {
         return CONTAINER;
     }
 
@@ -36,7 +37,7 @@ public class Container {
         if (this.strategy == null) {
             throw new PersistenceException(ExceptionType.NoStrategyIsSet, "There is no strategy");
         }
-        final List<Member> loadedMembers = this.strategy.load();
+        final List<M> loadedMembers = this.strategy.load();
         if (loadedMembers == null) {
             throw new NullPointerException("Can not load Members (loadedMembers = null)");
         }
@@ -44,23 +45,27 @@ public class Container {
         this.members.addAll(loadedMembers);
     }
 
-    public void addMember(Member member) throws ContainerException {
-        if (this.hasMember(member.getID())) {
+    public void addMember(M member) throws ContainerException {
+        if (this.hasMember(member.getId())) {
             throw new ContainerException(member);
         }
         this.members.add(member);
     }
 
     public boolean hasMember(Integer id) {
-        return this.members.stream().anyMatch(member -> member.getID().equals(id));
+        return this.members.stream().anyMatch(member -> member.getId().equals(id));
     }
 
     public boolean deleteMember(Integer id) {
-        return this.members.removeIf(member -> member.getID().equals(id));
+        return this.members.removeIf(member -> member.getId().equals(id));
     }
 
-    public List<Member> getCurrentList() {
+    public List<M> getCurrentList() {
         return this.members;
+    }
+
+    public Optional<M> get(Integer id) {
+        return this.members.stream().filter(m -> m.getId().equals(id)).findFirst();
     }
 
     public int size() {

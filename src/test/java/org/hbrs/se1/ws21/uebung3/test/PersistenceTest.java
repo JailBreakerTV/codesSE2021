@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class PersistenceTest {
 
-    private Container container;
+    private Container<Member> container;
     private PersistenceStrategy<Member> mongoStrategy;
     private PersistenceStrategy<Member> streamStrategy;
 
@@ -77,7 +77,7 @@ public class PersistenceTest {
         assertInstanceOf(PersistenceStrategyStream.class, this.streamStrategy);
 
         final PersistenceStrategyStream<Member> streamStrategy = (PersistenceStrategyStream<Member>) this.streamStrategy;
-        streamStrategy.setLocation("C:\\Users\\Artillero\\Documents\\IntelliJ\\Studium\\codesSE2021\\src\\main\\resources");
+        streamStrategy.setLocation(System.getProperty("user.dir"));
 
         final PersistenceException directoryException = assertThrows(PersistenceException.class, this.streamStrategy::openConnection);
         assertEquals(ExceptionType.OutputFileCanNotBeDirectory, directoryException.getExceptionType());
@@ -101,7 +101,7 @@ public class PersistenceTest {
         assertInstanceOf(PersistenceStrategyStream.class, this.streamStrategy);
 
         final PersistenceStrategyStream<Member> streamStrategy = (PersistenceStrategyStream<Member>) this.streamStrategy;
-        streamStrategy.setLocation("C:://Users//Artillero//Documents//IntelliJ//Studium//codesSE2021//src//main//resources");
+        streamStrategy.setLocation(null);
 
         final PersistenceException invalidPathException = assertThrows(PersistenceException.class, this.streamStrategy::openConnection);
         assertEquals(ExceptionType.OutputFilePathIsInvalid, invalidPathException.getExceptionType());

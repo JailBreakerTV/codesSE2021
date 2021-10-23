@@ -28,10 +28,10 @@ public class ContainerTest {
         this.container.addMember(this.third);
         assertEquals(3, this.container.size());
 
-        this.container.deleteMember(this.first.getID());
+        this.container.deleteMember(this.first.getId());
         assertEquals(2, this.container.size());
 
-        this.container.deleteMember(this.second.getID());
+        this.container.deleteMember(this.second.getId());
         assertEquals(1, this.container.size());
 
         this.container.addMember(this.first);
@@ -39,9 +39,9 @@ public class ContainerTest {
 
         assertThrows(ContainerException.class, () -> this.container.addMember(this.first));
 
-        assertFalse(this.container.deleteMember(this.second.getID()));
+        assertFalse(this.container.deleteMember(this.second.getId()));
 
-        assertTrue(this.container.deleteMember(this.first.getID()));
+        assertTrue(this.container.deleteMember(this.first.getId()));
     }
 
 }

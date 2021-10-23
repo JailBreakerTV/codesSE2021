@@ -16,13 +16,13 @@ public class MemberImpl implements Member, Serializable {
     }
 
     @Override
-    public Integer getID() {
+    public Integer getId() {
         return this.id;
     }
 
     @Override
     public String toString() {
-        return String.format("Member (ID = %s)", this.getID());
+        return String.format("Member (ID = %s)", this.getId());
     }
 
     @Override

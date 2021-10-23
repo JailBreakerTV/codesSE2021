@@ -16,7 +16,7 @@ public final class Client implements Member {
         final Member first = new MemberImpl(1);
         final Member second = new MemberImpl(2);
         final Member third = new MemberImpl(3);
-        final Container container = Container.getContainer();
+        final Container<Member> container = Container.getContainer();
         container.addMember(first);
         container.addMember(second);
         container.addMember(third);
@@ -26,7 +26,7 @@ public final class Client implements Member {
     }
 
     @Override
-    public Integer getID() {
+    public Integer getId() {
         return this.id;
     }
 }
