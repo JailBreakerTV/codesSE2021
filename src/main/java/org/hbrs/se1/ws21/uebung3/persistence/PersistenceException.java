@@ -1,14 +1,44 @@
 package org.hbrs.se1.ws21.uebung3.persistence;
 
+/**
+ * This class represents an exception which can be thrown in the context of persistence.
+ */
 public class PersistenceException extends Exception {
 
+    /**
+     * The type of the exception
+     *
+     * @see ExceptionType#values()
+     */
     private final ExceptionType exceptionType;
 
+    /**
+     * Instantiates this exception with a given message and exceptionType
+     *
+     * @param exceptionType of this exception
+     * @param message       which should be printed
+     */
     public PersistenceException(ExceptionType exceptionType, String message) {
         super(message);
         this.exceptionType = exceptionType;
     }
 
+    /**
+     * Instantiates this exception with a given {@link Throwable} and exceptionType
+     *
+     * @param exceptionType of this exception
+     * @param throwable     which was thrown and should be transformed
+     */
+    public PersistenceException(ExceptionType exceptionType, Throwable throwable) {
+        super(throwable.getMessage());
+        this.exceptionType = exceptionType;
+    }
+
+    /**
+     * This function will return the current exceptionType value
+     *
+     * @return ExceptionType of this exception
+     */
     public ExceptionType getExceptionType() {
         return this.exceptionType;
     }

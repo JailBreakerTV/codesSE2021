@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * This class provides the basic structure for storing and managing generic instances
@@ -25,6 +28,11 @@ public abstract class Container<E extends IdAware> {
      * This {@link List} contains all object instances this container manages
      */
     private final List<E> members = new ArrayList<>();
+
+    /**
+     * This lock makes the operations on the list thread-safe
+     */
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
 
     /**
      * This {@link PersistenceStrategy} takes care of
@@ -44,7 +52,7 @@ public abstract class Container<E extends IdAware> {
         if (this.strategy == null) {
             throw new PersistenceException(ExceptionType.NoStrategyIsSet, "There is no strategy");
         }
-        this.strategy.save(this.members);
+        this.strategy.save(this.getCurrentList());
     }
 
     /**
@@ -61,8 +69,13 @@ public abstract class Container<E extends IdAware> {
         if (loadedMembers == null) {
             throw new NullPointerException("Can not load Members (loadedMembers = null)");
         }
-        this.members.removeIf(member -> loadedMembers.stream().anyMatch(member::equals));
-        this.members.addAll(loadedMembers);
+        this.lock.writeLock().lock();
+        try {
+            this.members.removeIf(member -> loadedMembers.stream().anyMatch(member::equals));
+            this.members.addAll(loadedMembers);
+        } finally {
+            this.lock.writeLock().unlock();
+        }
     }
 
     /**
@@ -75,7 +88,12 @@ public abstract class Container<E extends IdAware> {
         if (this.hasMember(member.getId())) {
             throw new ContainerException(member);
         }
-        this.members.add(member);
+        this.lock.writeLock().lock();
+        try {
+            this.members.add(member);
+        } finally {
+            this.lock.writeLock().unlock();
+        }
     }
 
     /**
@@ -86,7 +104,12 @@ public abstract class Container<E extends IdAware> {
      * @return boolean either true if an entry exists or false if this is not the case
      */
     public boolean hasMember(Integer id) {
-        return this.members.stream().anyMatch(member -> member.getId().equals(id));
+        this.lock.readLock().lock();
+        try {
+            return this.members.stream().anyMatch(member -> member.getId().equals(id));
+        } finally {
+            this.lock.readLock().unlock();
+        }
     }
 
     /**
@@ -96,7 +119,12 @@ public abstract class Container<E extends IdAware> {
      * @return boolean either true if the entry was deleted or false if this not the case
      */
     public boolean deleteMember(Integer id) {
-        return this.members.removeIf(member -> member.getId().equals(id));
+        this.lock.writeLock().lock();
+        try {
+            return this.members.removeIf(member -> member.getId().equals(id));
+        } finally {
+            this.lock.writeLock().unlock();
+        }
     }
 
     /**
@@ -106,7 +134,12 @@ public abstract class Container<E extends IdAware> {
      * @see Collections#unmodifiableList(List)
      */
     public List<E> getCurrentList() {
-        return Collections.unmodifiableList(this.members);
+        this.lock.readLock().lock();
+        try {
+            return Collections.unmodifiableList(this.members);
+        } finally {
+            this.lock.readLock().unlock();
+        }
     }
 
     /**
@@ -116,7 +149,12 @@ public abstract class Container<E extends IdAware> {
      * @return Optional if there is an entry with this Id or {@link Optional#empty()} if this is not the case
      */
     public Optional<E> get(Integer id) {
-        return this.members.stream().filter(e -> e.getId().equals(id)).findFirst();
+        this.lock.readLock().lock();
+        try {
+            return this.members.stream().filter(e -> e.getId().equals(id)).findFirst();
+        } finally {
+            this.lock.readLock().unlock();
+        }
     }
 
     /**
@@ -125,6 +163,23 @@ public abstract class Container<E extends IdAware> {
      * @return int representing the local lists current length
      */
     public int size() {
-        return this.members.size();
+        this.lock.readLock().lock();
+        try {
+            return this.members.size();
+        } finally {
+            this.lock.readLock().unlock();
+        }
+    }
+
+    /**
+     * This function will clear the list of entries
+     */
+    public void clear() {
+        this.lock.writeLock().lock();
+        try {
+            this.members.clear();
+        } finally {
+            this.lock.writeLock().unlock();
+        }
     }
 }

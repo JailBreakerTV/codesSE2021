@@ -1,9 +1,6 @@
 package org.hbrs.se1.ws21.uebung3.test;
 
-import org.hbrs.se1.ws21.uebung2.Container;
-import org.hbrs.se1.ws21.uebung2.Member;
-import org.hbrs.se1.ws21.uebung2.MemberContainer;
-import org.hbrs.se1.ws21.uebung2.MemberImpl;
+import org.hbrs.se1.ws21.uebung2.*;
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceException;
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceException.ExceptionType;
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceStrategy;
@@ -13,6 +10,7 @@ import org.junit.jupiter.api.*;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -47,6 +45,8 @@ public class PersistenceTest {
     @Test
     @Order(2)
     public void noStrategyTest() {
+        assertNotNull(this.container);
+        this.container.setStrategy(null);
         final PersistenceException loadException = assertThrows(PersistenceException.class, this.container::load);
         assertEquals(ExceptionType.NoStrategyIsSet, loadException.getExceptionType());
 
@@ -62,6 +62,7 @@ public class PersistenceTest {
     @Test
     @Order(3)
     public void useMongoStrategyTest() {
+        assertNotNull(this.container);
         assertNotNull(this.mongoStrategy);
         assertInstanceOf(PersistenceStrategyMongoDB.class, this.mongoStrategy);
         assertThrows(UnsupportedOperationException.class, this.mongoStrategy::openConnection);
@@ -74,6 +75,7 @@ public class PersistenceTest {
     @Test
     @Order(4)
     public void useDirectoryAsOutputLocationTest() {
+        assertNotNull(this.container);
         assertNotNull(this.streamStrategy);
         assertInstanceOf(PersistenceStrategyStream.class, this.streamStrategy);
 
@@ -98,6 +100,7 @@ public class PersistenceTest {
     @Test
     @Order(5)
     public void useWrongOutputLocationTest() {
+        assertNotNull(this.container);
         assertNotNull(this.streamStrategy);
         assertInstanceOf(PersistenceStrategyStream.class, this.streamStrategy);
 
@@ -111,6 +114,7 @@ public class PersistenceTest {
     @Test
     @Order(6)
     public void storeMembersAndDeleteFromContainerTest() {
+        assertNotNull(this.container);
         assertNotNull(this.container);
         assertInstanceOf(PersistenceStrategyStream.class, this.streamStrategy);
 
@@ -138,7 +142,7 @@ public class PersistenceTest {
 
         assertDoesNotThrow(() -> this.container.store());
 
-        this.container.getCurrentList().clear();
+        this.container.clear();
         assertEquals(0, this.container.size());
 
         assertDoesNotThrow(this.container::load);

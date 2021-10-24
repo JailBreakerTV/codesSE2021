@@ -20,6 +20,11 @@ public class PersistenceStrategyStream<Member> implements PersistenceStrategy<Me
     // URL of file, in which the objects are stored
     private String location = "objects.ser";
 
+    /**
+     * Instantiates this strategy with a given output location
+     *
+     * @param location which should be used as an output file
+     */
     public PersistenceStrategyStream(String location) {
         this.location = location;
     }
@@ -32,18 +37,16 @@ public class PersistenceStrategyStream<Member> implements PersistenceStrategy<Me
                 try {
                     Files.createFile(path);
                 } catch (FileAlreadyExistsException e) {
-                    throw new PersistenceException(OutputFileAlreadyExist, e.getMessage());
+                    throw new PersistenceException(OutputFileAlreadyExist, e);
                 } catch (Throwable t) {
-                    throw new PersistenceException(OutputFileCouldNotBeCreated, t.getMessage());
+                    throw new PersistenceException(OutputFileCouldNotBeCreated, t);
                 }
             }
             if (Files.isDirectory(path)) {
                 throw new PersistenceException(OutputFileCanNotBeDirectory, "Given File can not be a directory");
             }
-        } catch (InvalidPathException e) {
-            throw new PersistenceException(OutputFilePathIsInvalid, e.getMessage());
-        } catch (NullPointerException e) {
-            throw new PersistenceException(OutputFilePathIsInvalid, e.getMessage());
+        } catch (InvalidPathException | NullPointerException e) {
+            throw new PersistenceException(OutputFilePathIsInvalid, e);
         }
     }
 
@@ -67,7 +70,7 @@ public class PersistenceStrategyStream<Member> implements PersistenceStrategy<Me
             throw new PersistenceException(OutputFileNotExisting, "There is no file which can be edited");
         } catch (IOException e) {
             e.printStackTrace();
-            throw new PersistenceException(ValueCouldNotBeSaved, e.getMessage());
+            throw new PersistenceException(ValueCouldNotBeSaved, e);
         }
     }
 
@@ -76,11 +79,11 @@ public class PersistenceStrategyStream<Member> implements PersistenceStrategy<Me
         try {
             return this.read();
         } catch (ClassCastException e) {
-            throw new PersistenceException(ValueCouldNotBeCasted, e.getMessage());
+            throw new PersistenceException(ValueCouldNotBeCasted, e);
         } catch (ClassNotFoundException e) {
-            throw new PersistenceException(ValueClassCouldNotBeFound, e.getMessage());
+            throw new PersistenceException(ValueClassCouldNotBeFound, e);
         } catch (IOException e) {
-            throw new PersistenceException(ValueCouldNotBeFetched, e.getMessage());
+            throw new PersistenceException(ValueCouldNotBeFetched, e);
         }
     }
 
