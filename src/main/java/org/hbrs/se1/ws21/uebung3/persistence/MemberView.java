@@ -1,7 +1,6 @@
 package org.hbrs.se1.ws21.uebung3.persistence;
 
 import lombok.extern.java.Log;
-import lombok.extern.slf4j.Slf4j;
 import org.hbrs.se1.ws21.uebung2.Member;
 
 import java.util.List;

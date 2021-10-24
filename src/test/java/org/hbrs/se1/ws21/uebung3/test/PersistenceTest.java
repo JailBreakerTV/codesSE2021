@@ -10,7 +10,6 @@ import org.junit.jupiter.api.*;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.concurrent.CompletableFuture;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -74,6 +73,40 @@ public class PersistenceTest {
 
     @Test
     @Order(4)
+    public void useDefaultLocation() {
+        assertNotNull(this.container);
+        assertNotNull(this.streamStrategy);
+        assertInstanceOf(PersistenceStrategyStream.class, this.streamStrategy);
+        this.container.setStrategy(this.streamStrategy);
+
+        this.container.clear();
+        assertEquals(0, this.container.size());
+
+        final Member first = new MemberImpl(1);
+        final Member second = new MemberImpl(2);
+        final Member third = new MemberImpl(3);
+
+        assertDoesNotThrow(() -> this.container.addMember(first));
+        assertEquals(1, this.container.size());
+
+        assertDoesNotThrow(() -> this.container.addMember(second));
+        assertEquals(2, this.container.size());
+
+        assertDoesNotThrow(() -> this.container.addMember(third));
+        assertEquals(3, this.container.size());
+
+        assertDoesNotThrow(() -> this.container.store());
+
+        this.container.clear();
+        assertEquals(0, this.container.size());
+
+        assertDoesNotThrow(() -> this.container.load());
+
+        assertEquals(3, this.container.size());
+    }
+
+    @Test
+    @Order(5)
     public void useDirectoryAsOutputLocationTest() {
         assertNotNull(this.container);
         assertNotNull(this.streamStrategy);
@@ -98,11 +131,14 @@ public class PersistenceTest {
     }
 
     @Test
-    @Order(5)
+    @Order(6)
     public void useWrongOutputLocationTest() {
         assertNotNull(this.container);
         assertNotNull(this.streamStrategy);
         assertInstanceOf(PersistenceStrategyStream.class, this.streamStrategy);
+
+        this.container.clear();
+        assertEquals(0, this.container.size());
 
         final PersistenceStrategyStream<Member> streamStrategy = (PersistenceStrategyStream<Member>) this.streamStrategy;
         streamStrategy.setLocation(null);
@@ -112,11 +148,14 @@ public class PersistenceTest {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     public void storeMembersAndDeleteFromContainerTest() {
         assertNotNull(this.container);
-        assertNotNull(this.container);
+        assertNotNull(this.streamStrategy);
         assertInstanceOf(PersistenceStrategyStream.class, this.streamStrategy);
+
+        this.container.clear();
+        assertEquals(0, this.container.size());
 
         final String userDir = System.getProperty("user.dir");
         assertNotNull(userDir);
