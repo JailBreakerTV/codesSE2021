@@ -42,6 +42,7 @@ public class PersistenceTest {
      */
     @BeforeEach
     public void init() {
+        // Specify the container type
         this.container = MemberContainer.getInstance();
         this.mongoStrategy = new PersistenceStrategyMongoDB<>();
         this.streamStrategy = new PersistenceStrategyStream<>();
@@ -53,7 +54,10 @@ public class PersistenceTest {
     @Test
     @Order(1)
     public void initialContainerTest() {
+        // Check if there exists a container instance
         assertNotNull(this.container);
+
+        // Check if the container is empty after its instantiation
         assertEquals(0, this.container.size());
     }
 
@@ -65,6 +69,7 @@ public class PersistenceTest {
     @Test
     @Order(2)
     public void noStrategyTest() {
+        // Check if there exists a container instance
         assertNotNull(this.container);
 
         // Set the strategy to null
@@ -88,15 +93,26 @@ public class PersistenceTest {
     @Test
     @Order(3)
     public void useMongoStrategyTest() {
+        // Check if there exists a container instance
         assertNotNull(this.container);
+
+        // Check if there exists a mongoStrategy instance
         assertNotNull(this.mongoStrategy);
+
+        // Check if the mongoStrategy instance instanceof the correct type
         assertInstanceOf(PersistenceStrategyMongoDB.class, this.mongoStrategy);
+
+        // Open the mongoStrategy connection
         assertThrows(UnsupportedOperationException.class, this.mongoStrategy::openConnection);
         this.container.setStrategy(this.mongoStrategy);
+
         // Call the containers store function
         assertThrows(UnsupportedOperationException.class, this.container::store);
+
         // Call the containers store load
         assertThrows(UnsupportedOperationException.class, this.container::load);
+
+        // Close the mongoStrategy connection
         assertThrows(UnsupportedOperationException.class, this.mongoStrategy::closeConnection);
     }
 
@@ -160,25 +176,48 @@ public class PersistenceTest {
     @Test
     @Order(5)
     public void useDirectoryAsOutputLocationTest() {
+        // Check if there exists a container instance
         assertNotNull(this.container);
+
+        // Check if there exists a streamStrategy instance
         assertNotNull(this.streamStrategy);
+
+        // Check if the streamStrategy instance instanceof the correct type
         assertInstanceOf(PersistenceStrategyStream.class, this.streamStrategy);
 
+        // Set the location to the current working directory
         final PersistenceStrategyStream<Member> streamStrategy = (PersistenceStrategyStream<Member>) this.streamStrategy;
         streamStrategy.setLocation(System.getProperty("user.dir"));
 
-        final PersistenceException directoryException = assertThrows(PersistenceException.class, this.streamStrategy::openConnection);
+        // Open the connection after setting the location to the current working directory
+        final PersistenceException directoryException = assertThrows(
+                PersistenceException.class,
+                this.streamStrategy::openConnection
+        );
         assertEquals(ExceptionType.OutputFileCanNotBeDirectory, directoryException.getExceptionType());
 
+        // Update the containers strategy
         this.container.setStrategy(this.streamStrategy);
 
-        final PersistenceException fileNotExistingException = assertThrows(PersistenceException.class, this.container::store);
+        // Store the containers members
+        final PersistenceException fileNotExistingException = assertThrows(
+                PersistenceException.class,
+                this.container::store
+        );
         assertEquals(ExceptionType.OutputFileNotExisting, fileNotExistingException.getExceptionType());
 
-        final PersistenceException valueCouldNotBeFetchedException = assertThrows(PersistenceException.class, this.container::load);
+        // Load all members into the container
+        final PersistenceException valueCouldNotBeFetchedException = assertThrows(
+                PersistenceException.class,
+                this.container::load
+        );
         assertEquals(ExceptionType.ValueCouldNotBeFetched, valueCouldNotBeFetchedException.getExceptionType());
 
-        final PersistenceException notImplementedException = assertThrows(PersistenceException.class, this.streamStrategy::closeConnection);
+        // Close the streamStrategy
+        final PersistenceException notImplementedException = assertThrows(
+                PersistenceException.class,
+                this.streamStrategy::closeConnection
+        );
         assertEquals(ExceptionType.ImplementationNotAvailable, notImplementedException.getExceptionType());
     }
 
@@ -192,17 +231,28 @@ public class PersistenceTest {
     @Test
     @Order(6)
     public void useWrongOutputLocationTest() {
+        // Check if there exists a container instance
         assertNotNull(this.container);
+
+        // Check if there exists a streamStrategy instance
         assertNotNull(this.streamStrategy);
+
+        // Check if the streamStrategy instance instanceof the correct type
         assertInstanceOf(PersistenceStrategyStream.class, this.streamStrategy);
 
+        // Clear the container to prevent duplicate entries
         this.container.clear();
         assertEquals(0, this.container.size());
 
+        // Use null as output file location
         final PersistenceStrategyStream<Member> streamStrategy = (PersistenceStrategyStream<Member>) this.streamStrategy;
         streamStrategy.setLocation(null);
 
-        final PersistenceException invalidPathException = assertThrows(PersistenceException.class, this.streamStrategy::openConnection);
+        // Open the connection after setting the output file location to null
+        final PersistenceException invalidPathException = assertThrows(
+                PersistenceException.class,
+                this.streamStrategy::openConnection
+        );
         assertEquals(ExceptionType.OutputFilePathIsInvalid, invalidPathException.getExceptionType());
     }
 
@@ -216,42 +266,57 @@ public class PersistenceTest {
     @Test
     @Order(7)
     public void storeMembersAndDeleteFromContainerTest() {
+        // Check if there exists a container instance
         assertNotNull(this.container);
+
+        // Check if there exists a streamStrategy instance
         assertNotNull(this.streamStrategy);
+
+        // Check if the streamStrategy instance instanceof the correct type
         assertInstanceOf(PersistenceStrategyStream.class, this.streamStrategy);
 
+        // Clear the container to prevent duplicate entries
         this.container.clear();
         assertEquals(0, this.container.size());
 
+        // Get the current working directory
         final String userDir = System.getProperty("user.dir");
         assertNotNull(userDir);
 
+        // Prepare the streamStrategy and set its output file location to a file which lies in the working directory
         final PersistenceStrategyStream<Member> streamStrategy = (PersistenceStrategyStream<Member>) this.streamStrategy;
         final Path path = assertDoesNotThrow(() -> Paths.get(userDir, "abcdefg.txt"));
         streamStrategy.setLocation(path.toString());
 
+        // Update the container persistence strategy
         this.container.setStrategy(this.streamStrategy);
 
+        // Add the first member
         final Member first = new MemberImpl(1);
-        final Member second = new MemberImpl(2);
-        final Member third = new MemberImpl(3);
-
         assertDoesNotThrow(() -> this.container.addMember(first));
         assertEquals(1, this.container.size());
 
+        // Add the second member
+        final Member second = new MemberImpl(2);
         assertDoesNotThrow(() -> this.container.addMember(second));
         assertEquals(2, this.container.size());
 
+        // Add the third member
+        final Member third = new MemberImpl(3);
         assertDoesNotThrow(() -> this.container.addMember(third));
         assertEquals(3, this.container.size());
 
+        // Store the previously added members to the harddrive
         assertDoesNotThrow(() -> this.container.store());
 
+        // Clear the container
         this.container.clear();
         assertEquals(0, this.container.size());
 
+        // Load the previously stored members from the harddrive
         assertDoesNotThrow(this.container::load);
 
+        // Check if the container has loaded all three members
         assertEquals(3, this.container.size());
     }
 }
