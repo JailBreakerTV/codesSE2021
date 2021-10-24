@@ -49,7 +49,7 @@ public abstract class Container<E extends IdAware> {
      */
     public void store() throws PersistenceException {
         if (this.strategy == null) {
-            throw new PersistenceException(ExceptionType.NoStrategyIsSet, "There is no strategy");
+            throw new PersistenceException(ExceptionType.NO_STRATEGY_IS_SET, "There is no strategy");
         }
         this.strategy.save(this.getCurrentList());
     }
@@ -62,7 +62,7 @@ public abstract class Container<E extends IdAware> {
      */
     public void load() throws PersistenceException {
         if (this.strategy == null) {
-            throw new PersistenceException(ExceptionType.NoStrategyIsSet, "There is no strategy");
+            throw new PersistenceException(ExceptionType.NO_STRATEGY_IS_SET, "There is no strategy");
         }
         final List<E> loadedMembers = this.strategy.load();
         if (loadedMembers == null) {

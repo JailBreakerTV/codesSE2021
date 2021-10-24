@@ -37,40 +37,39 @@ public class PersistenceStrategyStream<Member> implements PersistenceStrategy<Me
                 try {
                     Files.createFile(path);
                 } catch (FileAlreadyExistsException e) {
-                    throw new PersistenceException(OutputFileAlreadyExist, e);
+                    throw new PersistenceException(OUTPUT_FILE_ALREADY_EXIST, e);
                 } catch (Throwable t) {
-                    throw new PersistenceException(OutputFileCouldNotBeCreated, t);
+                    throw new PersistenceException(OUTPUT_FILE_COULD_NOT_BE_CREATED, t);
                 }
             }
             if (Files.isDirectory(path)) {
-                throw new PersistenceException(OutputFileCanNotBeDirectory, "Given File can not be a directory");
+                throw new PersistenceException(OUTPUT_FILE_CAN_NOT_BE_DIRECTORY, "Given File can not be a directory");
             }
         } catch (InvalidPathException | NullPointerException e) {
-            throw new PersistenceException(OutputFilePathIsInvalid, e);
+            throw new PersistenceException(OUTPUT_FILE_PATH_IS_INVALID, e);
         }
     }
 
     @Override
     public void closeConnection() throws PersistenceException {
-        throw new PersistenceException(ImplementationNotAvailable, "There is no implementation available yet");
+        throw new PersistenceException(IMPLEMENTATION_NOT_AVAILABLE, "There is no implementation available yet");
     }
 
     @Override
     public void save(List<Member> member) throws PersistenceException {
-        if (!(member instanceof Serializable)) {
+        if (!(member instanceof final Serializable serializable)) {
             throw new PersistenceException(
-                    ValueMustImplementSerializable,
+                    VALUE_MUST_IMPLEMENT_SERIALIZABLE,
                     "The value to be saved must be an implementation of the Serializable interface"
             );
         }
-        final Serializable serializable = (Serializable) member;
         try {
             this.write(serializable);
         } catch (FileNotFoundException e) {
-            throw new PersistenceException(OutputFileNotExisting, "There is no file which can be edited");
+            throw new PersistenceException(OUTPUT_FILE_NOT_EXISTING, "There is no file which can be edited");
         } catch (IOException e) {
             e.printStackTrace();
-            throw new PersistenceException(ValueCouldNotBeSaved, e);
+            throw new PersistenceException(VALUE_COULD_NOT_BE_SAVED, e);
         }
     }
 
@@ -79,11 +78,11 @@ public class PersistenceStrategyStream<Member> implements PersistenceStrategy<Me
         try {
             return this.read();
         } catch (ClassCastException e) {
-            throw new PersistenceException(ValueCouldNotBeCasted, e);
+            throw new PersistenceException(VALUE_COULD_NOT_BE_CASTED, e);
         } catch (ClassNotFoundException e) {
-            throw new PersistenceException(ValueClassCouldNotBeFound, e);
+            throw new PersistenceException(VALUE_CLASS_COULD_NOT_BE_FOUND, e);
         } catch (IOException e) {
-            throw new PersistenceException(ValueCouldNotBeFetched, e);
+            throw new PersistenceException(VALUE_COULD_NOT_BE_FETCHED, e);
         }
     }
 

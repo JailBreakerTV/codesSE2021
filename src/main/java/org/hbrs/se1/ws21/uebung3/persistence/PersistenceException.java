@@ -52,20 +52,20 @@ public class PersistenceException extends Exception {
      * of Type 'ImplementationNotAvailable'. Re-throw the new exception e.g. to a client
      */
     public enum ExceptionType {
-        ImplementationNotAvailable,
-        ConnectionNotAvailable,
-        NoStrategyIsSet,
+        IMPLEMENTATION_NOT_AVAILABLE,
+        CONNECTION_NOT_AVAILABLE,
+        NO_STRATEGY_IS_SET,
 
-        ValueMustImplementSerializable,
-        ValueCouldNotBeSaved,
-        ValueClassCouldNotBeFound,
-        ValueCouldNotBeCasted,
-        ValueCouldNotBeFetched,
+        VALUE_MUST_IMPLEMENT_SERIALIZABLE,
+        VALUE_COULD_NOT_BE_SAVED,
+        VALUE_CLASS_COULD_NOT_BE_FOUND,
+        VALUE_COULD_NOT_BE_CASTED,
+        VALUE_COULD_NOT_BE_FETCHED,
 
-        OutputFileAlreadyExist,
-        OutputFileNotExisting,
-        OutputFileCanNotBeDirectory,
-        OutputFileCouldNotBeCreated,
-        OutputFilePathIsInvalid
+        OUTPUT_FILE_ALREADY_EXIST,
+        OUTPUT_FILE_NOT_EXISTING,
+        OUTPUT_FILE_CAN_NOT_BE_DIRECTORY,
+        OUTPUT_FILE_COULD_NOT_BE_CREATED,
+        OUTPUT_FILE_PATH_IS_INVALID
     }
 }

@@ -78,11 +78,11 @@ public class PersistenceTest {
 
         // Call the containers load function
         final PersistenceException loadException = assertThrows(PersistenceException.class, this.container::load);
-        assertEquals(ExceptionType.NoStrategyIsSet, loadException.getExceptionType());
+        assertEquals(ExceptionType.NO_STRATEGY_IS_SET, loadException.getExceptionType());
 
         // Call the containers store function
         final PersistenceException storeException = assertThrows(PersistenceException.class, this.container::store);
-        assertEquals(ExceptionType.NoStrategyIsSet, storeException.getExceptionType());
+        assertEquals(ExceptionType.NO_STRATEGY_IS_SET, storeException.getExceptionType());
     }
 
     /**
@@ -194,7 +194,7 @@ public class PersistenceTest {
                 PersistenceException.class,
                 this.streamStrategy::openConnection
         );
-        assertEquals(ExceptionType.OutputFileCanNotBeDirectory, directoryException.getExceptionType());
+        assertEquals(ExceptionType.OUTPUT_FILE_CAN_NOT_BE_DIRECTORY, directoryException.getExceptionType());
 
         // Update the containers strategy
         this.container.setStrategy(this.streamStrategy);
@@ -204,21 +204,21 @@ public class PersistenceTest {
                 PersistenceException.class,
                 this.container::store
         );
-        assertEquals(ExceptionType.OutputFileNotExisting, fileNotExistingException.getExceptionType());
+        assertEquals(ExceptionType.OUTPUT_FILE_NOT_EXISTING, fileNotExistingException.getExceptionType());
 
         // Load all members into the container
         final PersistenceException valueCouldNotBeFetchedException = assertThrows(
                 PersistenceException.class,
                 this.container::load
         );
-        assertEquals(ExceptionType.ValueCouldNotBeFetched, valueCouldNotBeFetchedException.getExceptionType());
+        assertEquals(ExceptionType.VALUE_COULD_NOT_BE_FETCHED, valueCouldNotBeFetchedException.getExceptionType());
 
         // Close the streamStrategy
         final PersistenceException notImplementedException = assertThrows(
                 PersistenceException.class,
                 this.streamStrategy::closeConnection
         );
-        assertEquals(ExceptionType.ImplementationNotAvailable, notImplementedException.getExceptionType());
+        assertEquals(ExceptionType.IMPLEMENTATION_NOT_AVAILABLE, notImplementedException.getExceptionType());
     }
 
     /**
@@ -253,7 +253,7 @@ public class PersistenceTest {
                 PersistenceException.class,
                 this.streamStrategy::openConnection
         );
-        assertEquals(ExceptionType.OutputFilePathIsInvalid, invalidPathException.getExceptionType());
+        assertEquals(ExceptionType.OUTPUT_FILE_PATH_IS_INVALID, invalidPathException.getExceptionType());
     }
 
     /**
