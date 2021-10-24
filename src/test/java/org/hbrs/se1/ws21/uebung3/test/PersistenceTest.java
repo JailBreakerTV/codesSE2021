@@ -67,12 +67,15 @@ public class PersistenceTest {
     public void noStrategyTest() {
         assertNotNull(this.container);
 
+        // Set the strategy to null
         this.container.setStrategy(null);
         assertNull(this.container.getStrategy());
 
+        // Call the containers load function
         final PersistenceException loadException = assertThrows(PersistenceException.class, this.container::load);
         assertEquals(ExceptionType.NoStrategyIsSet, loadException.getExceptionType());
 
+        // Call the containers store function
         final PersistenceException storeException = assertThrows(PersistenceException.class, this.container::store);
         assertEquals(ExceptionType.NoStrategyIsSet, storeException.getExceptionType());
     }
@@ -90,7 +93,9 @@ public class PersistenceTest {
         assertInstanceOf(PersistenceStrategyMongoDB.class, this.mongoStrategy);
         assertThrows(UnsupportedOperationException.class, this.mongoStrategy::openConnection);
         this.container.setStrategy(this.mongoStrategy);
+        // Call the containers store function
         assertThrows(UnsupportedOperationException.class, this.container::store);
+        // Call the containers store load
         assertThrows(UnsupportedOperationException.class, this.container::load);
         assertThrows(UnsupportedOperationException.class, this.mongoStrategy::closeConnection);
     }
@@ -102,34 +107,48 @@ public class PersistenceTest {
     @Test
     @Order(4)
     public void useDefaultLocation() {
+        // Check if there exists a container instance
         assertNotNull(this.container);
+
+        // Check if there exists a streamStrategy instance
         assertNotNull(this.streamStrategy);
+
+        // Check if the streamStrategy instance instanceof the correct type
         assertInstanceOf(PersistenceStrategyStream.class, this.streamStrategy);
+
+        // Use the stream strategy as the containers strategy
         this.container.setStrategy(this.streamStrategy);
 
+        // Clear the container to prevent duplicate entries from the test functions before
         this.container.clear();
         assertEquals(0, this.container.size());
 
+        // Add the first member
         final Member first = new MemberImpl(1);
-        final Member second = new MemberImpl(2);
-        final Member third = new MemberImpl(3);
-
         assertDoesNotThrow(() -> this.container.addMember(first));
         assertEquals(1, this.container.size());
 
+        // Add the second member
+        final Member second = new MemberImpl(2);
         assertDoesNotThrow(() -> this.container.addMember(second));
         assertEquals(2, this.container.size());
 
+        // Add the third member
+        final Member third = new MemberImpl(3);
         assertDoesNotThrow(() -> this.container.addMember(third));
         assertEquals(3, this.container.size());
 
+        // Call the containers store function
         assertDoesNotThrow(() -> this.container.store());
 
+        // Clear the container to be able to load the members from the harddrive
         this.container.clear();
         assertEquals(0, this.container.size());
 
+        // Call the containers load function to fill the container with the values astored before
         assertDoesNotThrow(() -> this.container.load());
 
+        // Check the containers size after loading all members from the harddrive
         assertEquals(3, this.container.size());
     }
 
