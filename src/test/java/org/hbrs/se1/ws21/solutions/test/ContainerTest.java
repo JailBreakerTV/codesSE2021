@@ -1,4 +1,4 @@
-package org.hbrs.se1.ws21.solutions.uebung3.test;
+package org.hbrs.se1.ws21.solutions.test;
 
 import org.hbrs.se1.ws21.solutions.uebung3.*;
 import org.hbrs.se1.ws21.solutions.uebung3.persistence.PersistenceException;
