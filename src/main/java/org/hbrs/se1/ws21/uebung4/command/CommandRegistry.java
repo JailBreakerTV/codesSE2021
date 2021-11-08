@@ -36,10 +36,6 @@ public final class CommandRegistry {
         try {
             COMMAND_MAP.put(command.getName().toLowerCase(), command);
             log.info(String.format("The command '%s' was registered", command.getName()));
-            command.getAliases().forEach(alias -> {
-                COMMAND_MAP.put(alias.toLowerCase(), command);
-                log.info(String.format("The sub-command '%s' was registered", alias));
-            });
         } finally {
             LOCK.writeLock().unlock();
         }
