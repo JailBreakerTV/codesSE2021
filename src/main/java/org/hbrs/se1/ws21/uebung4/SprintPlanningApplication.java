@@ -2,31 +2,56 @@ package org.hbrs.se1.ws21.uebung4;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.hbrs.se1.ws21.uebung4.command.CommandParameterMap;
-import org.hbrs.se1.ws21.uebung4.command.CommandRegistry;
-import org.hbrs.se1.ws21.uebung4.command.ConsoleCommand;
-import org.hbrs.se1.ws21.uebung4.command.EnterEmployeeCommand;
+import org.hbrs.se1.ws21.uebung2.Container;
+import org.hbrs.se1.ws21.uebung4.command.*;
+import org.hbrs.se1.ws21.uebung4.employee.Employee;
+import org.hbrs.se1.ws21.uebung4.employee.EmployeeContainer;
+import org.hbrs.se1.ws21.uebung4.employee.EmployeeService;
+import org.hbrs.se1.ws21.uebung4.employee.EmployeeServiceImpl;
+import org.hbrs.se1.ws21.uebung4.util.ConsoleReader;
+import org.hbrs.se1.ws21.uebung4.util.table.TablePrinter;
+import org.hbrs.se1.ws21.uebung4.util.table.TablePrinterException;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SprintPlanningApplication {
     public static void main(String[] args) {
         System.out.println(SprintPlanningMessages.STARTUP_MESSAGE);
-        CommandRegistry.register(new EnterEmployeeCommand());
-        ConsoleReader.read(input -> {
-            final String[] rawArguments = input.split(" ");
-            final ConsoleCommand command = CommandRegistry.find(rawArguments[0]);
+        final Container<Employee> employeeContainer = EmployeeContainer.getInstance();
+        final EmployeeService employeeService = new EmployeeServiceImpl(employeeContainer);
+        CommandRegistry.register(new EnterEmployeeCommand(employeeService, employeeContainer));
+        CommandRegistry.register(new HelpCommand());
+        defaultTablePrint();
+        ConsoleReader.start(input -> {
+            final String[] arguments = input.split(" ");
+            final ConsoleCommand command = CommandRegistry.find(arguments[0]);
             if (command == null) {
-                System.out.println("Use the command 'help' to show a list of all commands");
+                System.out.println("Nutze 'help' um alle Befehle aufzulisten");
                 return;
             }
             String[] commandArguments = {};
-            if (rawArguments.length > 1) {
-                commandArguments = Arrays.copyOfRange(rawArguments, 1, rawArguments.length);
+            if (arguments.length > 1) {
+                commandArguments = Arrays.copyOfRange(arguments, 1, arguments.length);
             }
-            final CommandParameterMap parameters = new CommandParameterMap(command, commandArguments);
-            command.execute(commandArguments, parameters);
+            command.execute(commandArguments, new CommandParameters(commandArguments));
         });
+    }
+
+    private static void defaultTablePrint() {
+        final Map<String, List<String>> values = new HashMap<>();
+        values.put("EmployeeId", Arrays.asList("1", "2", "3"));
+        values.put("Firstname", Arrays.asList("Heinz", "Peter", "Ralf"));
+        values.put("LastName", Arrays.asList("Schmitz", "Ulrich", "Horn"));
+        values.put("Department", Arrays.asList("Software-Development", "Planning-Team", "Researching"));
+        values.put("Expertises", Arrays.asList("Java, Kotlin, MySQL", "Product-Owner", "Journalism"));
+        try {
+            TablePrinter.printTable(values);
+        } catch (TablePrinterException e) {
+            e.printStackTrace();
+        }
     }
 }
