@@ -5,6 +5,8 @@ import lombok.NoArgsConstructor;
 import lombok.extern.java.Log;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -15,6 +17,15 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public final class CommandRegistry {
     private static final ReadWriteLock LOCK = new ReentrantReadWriteLock();
     private static final Map<String, ConsoleCommand> COMMAND_MAP = new HashMap<>();
+
+    public static Collection<ConsoleCommand> snapshot() {
+        LOCK.readLock().lock();
+        try {
+            return Collections.unmodifiableCollection(COMMAND_MAP.values());
+        } finally {
+            LOCK.readLock().unlock();
+        }
+    }
 
     public static void register(@Nullable ConsoleCommand command) {
         if (command == null) {

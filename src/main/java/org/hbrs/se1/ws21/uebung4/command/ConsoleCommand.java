@@ -12,5 +12,8 @@ public abstract class ConsoleCommand {
     private final String description;
     private final Set<String> aliases;
 
-    public abstract void execute(String[] args, CommandParameterMap parameters);
+    public abstract void execute(String[] args, CommandParameters parameters);
+
+    public void help() {
+    }
 }

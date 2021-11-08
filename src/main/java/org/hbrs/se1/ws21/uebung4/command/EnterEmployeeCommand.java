@@ -1,47 +1,63 @@
 package org.hbrs.se1.ws21.uebung4.command;
 
-import org.hbrs.se1.ws21.uebung4.NumberConversions;
+import lombok.extern.java.Log;
+import org.hbrs.se1.ws21.uebung2.Container;
+import org.hbrs.se1.ws21.uebung2.ContainerException;
+import org.hbrs.se1.ws21.uebung4.employee.Employee;
+import org.hbrs.se1.ws21.uebung4.employee.EmployeeService;
 
+import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
+@Log
 public class EnterEmployeeCommand extends ConsoleCommand {
-    public EnterEmployeeCommand() {
-        super("enter", "add new employees", Collections.emptySet());
+    private final EmployeeService employeeService;
+    private final Container<Employee> employeeContainer;
+
+    public EnterEmployeeCommand(EmployeeService employeeService, Container<Employee> employeeContainer) {
+        super("enter", "Dieser Befehl fügt neue Mitarbeiter hinzu", Collections.emptySet());
+        this.employeeService = employeeService;
+        this.employeeContainer = employeeContainer;
     }
 
     @Override
-    public void execute(String[] args, CommandParameterMap parameters) {
-        /*
-         enter
-                -id 1
-                -firstname Gökhan
-                -lastname Topcu
-                -role Software-Engineer
-                -department Development-Team
-                -expertise Java
-                -expertise Kotlin
-                -expertise MySQL
-                -expertise MongoDB
-         */
-        final String rawId = parameters.getString("-id");
-        final Integer id = NumberConversions.toInt(rawId);
+    public void execute(String[] args, CommandParameters parameters) {
+        final Integer id = parameters.getInteger("-id");
         if (id == null) {
-            System.err.println("The given Id must be an integer");
+            log.severe("Es wurde keine Id angegeben");
             return;
         }
-
         final String firstName = parameters.getString("-firstname");
-        final String lastname = parameters.getString("-lastname");
+        if (firstName == null) {
+            log.severe("Es wurde kein Vorname angegeben");
+            return;
+        }
+        final String lastName = parameters.getString("-lastname");
+        if (lastName == null) {
+            log.severe("Es wurde kein Nachname angegeben");
+            return;
+        }
         final String role = parameters.getString("-role");
+        if (role == null) {
+            log.severe("Es wurde keine Rolle angegeben");
+            return;
+        }
         final String department = parameters.getString("-department");
-        final List<String> expertise = parameters.getStringList("-expertise");
-
-        System.out.printf("Id: %s%n", rawId);
-        System.out.printf("FirstName: %s%n", firstName);
-        System.out.printf("LastName: %s%n", lastname);
-        System.out.printf("Role: %s%n", role);
-        System.out.printf("Department: %s%n", department);
-        System.out.printf("Expertise: %s%n", expertise.toString());
+        if (department == null) {
+            log.severe("Es wurde keine Abteilung angegeben");
+            return;
+        }
+        final Collection<Object> expertises = parameters.getCollection("-expertise");
+        if (expertises == null) {
+            log.severe("Es wurden keine Expertisen angegeben");
+            return;
+        }
+        try {
+            final Employee employee = this.employeeService.create(id);
+            this.employeeContainer.addMember(employee);
+            log.info("Der Mitarbeiter mit der Id " + employee.getId() + " wurde hinzugefügt");
+        } catch (ContainerException e) {
+            e.printStackTrace();
+        }
     }
 }
