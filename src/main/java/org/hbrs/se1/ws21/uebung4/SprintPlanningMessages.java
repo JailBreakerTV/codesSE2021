@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SprintPlanningMessages {
-    public static final String PREFIX = "> ";
+    public static final String PROMPT_PREFIX = "> ";
     public static final String STARTUP_MESSAGE = """
                _____            _       _          _____  _                            \s
               / ____|          (_)     | |        |  __ \\| |                           \s
