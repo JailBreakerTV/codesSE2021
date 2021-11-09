@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Data
-public final class Employee implements Member, Serializable, Comparable<Employee> {
+public class Employee implements Member, Serializable, Comparable<Employee> {
     private final Integer id;
     private final List<Expertise> expertises = new ArrayList<>();
     private String firstName;
