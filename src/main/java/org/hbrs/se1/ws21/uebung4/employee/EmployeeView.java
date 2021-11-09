@@ -20,7 +20,7 @@ import static org.hbrs.se1.ws21.uebung4.util.CollectionUtil.joinToString;
 public final class EmployeeView {
     public static void dump(List<Employee> employees) throws TablePrinterException {
         if (employees.isEmpty()) {
-            System.out.println("Die Liste der Mitarbeiter ist leer");
+            System.out.println("The list of employees is empty");
             return;
         }
         final List<String> ids = employees.stream()

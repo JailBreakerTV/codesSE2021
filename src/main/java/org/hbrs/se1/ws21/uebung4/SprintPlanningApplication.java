@@ -50,9 +50,10 @@ public class SprintPlanningApplication {
 
         CommandRegistry.register(new ExpertiseCommand(expertiseService, expertiseContainer));
         CommandRegistry.register(new DumpCommand(employeeContainer, expertiseService));
-        CommandRegistry.register(new EnterEmployeeCommand(employeeService, employeeContainer));
+        CommandRegistry.register(new EnterEmployeeCommand(employeeService, employeeContainer, expertiseService));
         CommandRegistry.register(new ExitCommand());
         CommandRegistry.register(new HelpCommand());
+        CommandRegistry.register(new ClearCommand());
         CommandRegistry.register(new LoadCommand(employeeContainer));
         CommandRegistry.register(new StoreCommand(employeeContainer));
     }
@@ -62,7 +63,7 @@ public class SprintPlanningApplication {
             final String[] arguments = input.split(" ");
             final ConsoleCommand command = CommandRegistry.find(arguments[0]);
             if (command == null) {
-                System.out.println("Nutze 'help' um alle Befehle aufzulisten");
+                System.out.println("Use 'help' to list all available commands");
                 return;
             }
             String[] commandArguments = {};

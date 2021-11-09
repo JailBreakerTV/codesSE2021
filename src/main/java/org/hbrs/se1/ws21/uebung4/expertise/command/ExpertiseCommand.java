@@ -109,9 +109,9 @@ public final class ExpertiseCommand extends ConsoleCommand {
                 e.printStackTrace();
             }
         } else {
-            System.out.println("Verwendung expertise add -id <Id> -title <Title>");
-            System.out.println("Verwendung expertise remove -id <Id>");
-            System.out.println("Verwendung expertise remove -title <Title>");
+            System.out.println("Use 'expertise add -id <Id> -title <title>' to add an expertise");
+            System.out.println("Use 'expertise remove -id <Id>' to remove an expertise by its id");
+            System.out.println("Use 'expertise remove -title <Title>' to remove an expertise by its title");
             System.out.println("Use 'expertise load' to load the expertise from the persistence store");
             System.out.println("Use 'expertise store' to persist the expertises");
         }

@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public final class ExpertiseView {
     public static void dump(List<Expertise> expertises) throws TablePrinterException {
         if (expertises.isEmpty()) {
-            System.out.println("Die Liste der Expertisen ist leer");
+            System.out.println("The list of expertises is empty");
             return;
         }
         final List<String> ids = expertises.stream()

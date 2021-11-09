@@ -47,7 +47,7 @@ public final class TablePrinter {
         final int lengthOfRowValues = columnsAndValues.values().stream().findFirst().map(List::size).orElseThrow();
         for (List<String> columnValues : columnsAndValues.values()) {
             if (columnValues.size() != lengthOfRowValues) {
-                throw new TablePrinterException("Die Zeilen-Werte der entsprechenden Spalten müssen die selbe Länge haben");
+                throw new TablePrinterException("The row values of the corresponding columns must have the same length");
             }
         }
         for (int j = 0; j < lengthOfRowValues; j++) {
