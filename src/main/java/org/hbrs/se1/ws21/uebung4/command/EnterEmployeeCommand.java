@@ -1,6 +1,5 @@
 package org.hbrs.se1.ws21.uebung4.command;
 
-import lombok.extern.java.Log;
 import org.hbrs.se1.ws21.uebung2.Container;
 import org.hbrs.se1.ws21.uebung2.ContainerException;
 import org.hbrs.se1.ws21.uebung4.employee.Employee;
@@ -10,7 +9,6 @@ import org.hbrs.se1.ws21.uebung4.expertise.Expertise;
 import java.util.Collection;
 import java.util.Collections;
 
-@Log
 public final class EnterEmployeeCommand extends ConsoleCommand {
     private final EmployeeService employeeService;
     private final Container<Employee> employeeContainer;
@@ -25,32 +23,32 @@ public final class EnterEmployeeCommand extends ConsoleCommand {
     public void execute(String[] args, CommandParameters parameters) {
         final Integer id = parameters.getInteger("-id");
         if (id == null) {
-            log.severe("Es wurde keine Id angegeben");
+            System.err.println("Es wurde keine Id angegeben");
             return;
         }
         final String firstName = parameters.getString("-firstname");
         if (firstName == null) {
-            log.severe("Es wurde kein Vorname angegeben");
+            System.err.println("Es wurde kein Vorname angegeben");
             return;
         }
         final String lastName = parameters.getString("-lastname");
         if (lastName == null) {
-            log.severe("Es wurde kein Nachname angegeben");
+            System.err.println("Es wurde kein Nachname angegeben");
             return;
         }
         final String role = parameters.getString("-role");
         if (role == null) {
-            log.severe("Es wurde keine Rolle angegeben");
+            System.err.println("Es wurde keine Rolle angegeben");
             return;
         }
         final String department = parameters.getString("-department");
         if (department == null) {
-            log.severe("Es wurde keine Abteilung angegeben");
+            System.err.println("Es wurde keine Abteilung angegeben");
             return;
         }
         final Collection<Object> expertises = parameters.getCollection("-expertise");
         if (expertises == null) {
-            log.severe("Es wurden keine Expertisen angegeben");
+            System.err.println("Es wurden keine Expertisen angegeben");
             return;
         }
         try {
@@ -63,7 +61,7 @@ public final class EnterEmployeeCommand extends ConsoleCommand {
                     .map(expertiseName -> new Expertise(0, expertiseName))
                     .forEach(expertise -> employee.getExpertises().add(expertise));
             this.employeeContainer.addMember(employee);
-            log.info("Der Mitarbeiter mit der Id " + employee.getId() + " wurde hinzugefügt");
+            System.out.printf("Der Mitarbeiter mit der Id %d wurde hinzugefügt%n", employee.getId());
         } catch (ContainerException e) {
             e.printStackTrace();
         }
