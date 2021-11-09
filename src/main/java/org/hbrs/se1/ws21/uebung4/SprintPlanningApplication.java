@@ -2,13 +2,17 @@ package org.hbrs.se1.ws21.uebung4;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.hbrs.se1.ws21.uebung2.Container;
+import org.hbrs.se1.ws21.uebung3.persistence.PersistenceStrategy;
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceStrategyStream;
 import org.hbrs.se1.ws21.uebung4.command.*;
 import org.hbrs.se1.ws21.uebung4.employee.Employee;
 import org.hbrs.se1.ws21.uebung4.employee.EmployeeContainer;
 import org.hbrs.se1.ws21.uebung4.employee.EmployeeService;
 import org.hbrs.se1.ws21.uebung4.employee.EmployeeServiceImpl;
+import org.hbrs.se1.ws21.uebung4.expertise.Expertise;
+import org.hbrs.se1.ws21.uebung4.expertise.ExpertiseContainer;
+import org.hbrs.se1.ws21.uebung4.expertise.ExpertiseService;
+import org.hbrs.se1.ws21.uebung4.expertise.ExpertiseServiceImpl;
 import org.hbrs.se1.ws21.uebung4.util.ConsoleReader;
 
 import java.util.Arrays;
@@ -28,13 +32,23 @@ public class SprintPlanningApplication {
     }
 
     private static void registerCommands() {
-        final Container<Employee> employeeContainer = EmployeeContainer.getInstance();
+        final EmployeeContainer employeeContainer = EmployeeContainer.getInstance();
+        final PersistenceStrategyStream<Employee> employeeStrategy = new PersistenceStrategyStream<>("employees.dat");
+        employeeContainer.setStrategy(employeeStrategy);
+
+        final ExpertiseContainer expertiseContainer = ExpertiseContainer.getInstance();
+        final PersistenceStrategy<Expertise> expertiseStrategy = new PersistenceStrategyStream<>("expertises.dat");
+        expertiseContainer.setStrategy(expertiseStrategy);
+
         final EmployeeService employeeService = new EmployeeServiceImpl(employeeContainer);
-        CommandRegistry.register(new DumpCommand(employeeContainer));
+        final ExpertiseService expertiseService = new ExpertiseServiceImpl(expertiseContainer);
+
+        CommandRegistry.register(new ExpertiseCommand(expertiseService, expertiseContainer));
+        CommandRegistry.register(new DumpCommand(employeeContainer, expertiseService));
         CommandRegistry.register(new EnterEmployeeCommand(employeeService, employeeContainer));
         CommandRegistry.register(new ExitCommand());
         CommandRegistry.register(new HelpCommand());
-        CommandRegistry.register(new LoadCommand(employeeContainer, new PersistenceStrategyStream<>("employees.dat")));
+        CommandRegistry.register(new LoadCommand(employeeContainer));
         CommandRegistry.register(new StoreCommand(employeeContainer));
     }
 
