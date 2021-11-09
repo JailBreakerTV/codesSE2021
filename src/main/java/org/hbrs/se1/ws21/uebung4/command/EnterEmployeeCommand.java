@@ -11,7 +11,7 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Log
-public class EnterEmployeeCommand extends ConsoleCommand {
+public final class EnterEmployeeCommand extends ConsoleCommand {
     private final EmployeeService employeeService;
     private final Container<Employee> employeeContainer;
 
