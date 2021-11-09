@@ -3,8 +3,6 @@ package org.hbrs.se1.ws21.uebung4;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.hbrs.se1.ws21.uebung2.Container;
-import org.hbrs.se1.ws21.uebung3.persistence.PersistenceException;
-import org.hbrs.se1.ws21.uebung3.persistence.PersistenceStrategy;
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceStrategyStream;
 import org.hbrs.se1.ws21.uebung4.command.*;
 import org.hbrs.se1.ws21.uebung4.employee.Employee;
@@ -14,6 +12,11 @@ import org.hbrs.se1.ws21.uebung4.employee.EmployeeServiceImpl;
 import org.hbrs.se1.ws21.uebung4.util.ConsoleReader;
 
 import java.util.Arrays;
+
+/*
+enter -id 1 -firstname Heinz -lastname Schmitz -role Software-Developer -department Software-Engineering-Team -expertise Java -expertise Kotlin -expertise MySQL
+enter -id 2 -firstname Peter -lastname Schmidt -role Software-Researcher -department Researching-Team -expertise Kotlin -expertise MySQL
+ */
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SprintPlanningApplication {
@@ -25,25 +28,14 @@ public class SprintPlanningApplication {
 
     private static void registerCommands() {
         final Container<Employee> employeeContainer = EmployeeContainer.getInstance();
-        final PersistenceStrategy<Employee> strategy = new PersistenceStrategyStream<>("employees.dat");
-        try {
-            strategy.openConnection();
-            employeeContainer.setStrategy(strategy);
-            employeeContainer.load();
-        } catch (PersistenceException e) {
-            e.printStackTrace();
-        }
         final EmployeeService employeeService = new EmployeeServiceImpl(employeeContainer);
-        CommandRegistry.register(new HelpCommand());
-        CommandRegistry.register(new ExitCommand());
         CommandRegistry.register(new DumpCommand(employeeContainer));
         CommandRegistry.register(new EnterEmployeeCommand(employeeService, employeeContainer));
+        CommandRegistry.register(new ExitCommand());
+        CommandRegistry.register(new HelpCommand());
+        CommandRegistry.register(new LoadCommand(employeeContainer, new PersistenceStrategyStream<>("employees.dat")));
+        CommandRegistry.register(new StoreCommand(employeeContainer));
     }
-
-    /*
-    enter -id 1 -firstname Heinz -lastname Schmitz -role Software-Developer -department Software-Engineering-Team -expertise Java -expertise Kotlin -expertise MySQL
-    enter -id 2 -firstname Peter -lastname Schmidt -role Software-Researcher -department Researching-Team -expertise Kotlin -expertise MySQL
-     */
 
     private static void handleCommandInputs() {
         ConsoleReader.start(input -> {
