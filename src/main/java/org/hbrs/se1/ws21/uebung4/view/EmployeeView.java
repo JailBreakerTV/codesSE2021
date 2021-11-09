@@ -7,6 +7,7 @@ import org.hbrs.se1.ws21.uebung4.model.Expertise;
 import org.hbrs.se1.ws21.uebung4.view.table.TablePrinter;
 import org.hbrs.se1.ws21.uebung4.view.table.TablePrinterException;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,8 +19,15 @@ import static org.hbrs.se1.ws21.uebung4.util.CollectionUtil.joinToString;
  * This class is responsible for printing a list of {@link Employee} instances organized in a table
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class EmployeeView {
-    public static void dump(List<Employee> employees) throws TablePrinterException {
+public final class EmployeeView extends AbstractTableView<Employee> {
+    private static final EmployeeView VIEW_INSTANCE = new EmployeeView();
+
+    public static EmployeeView getInstance() {
+        return VIEW_INSTANCE;
+    }
+
+    @Override
+    public void dump(Collection<Employee> employees) throws TablePrinterException {
         if (employees.isEmpty()) {
             System.out.println("The list of employees is empty");
             return;

@@ -47,7 +47,7 @@ public final class DumpCommand extends ConsoleCommand {
         }
         Collections.sort(employees);
         try {
-            EmployeeView.dump(employees);
+            EmployeeView.getInstance().dump(employees);
         } catch (TablePrinterException e) {
             e.printStackTrace();
         }

@@ -6,6 +6,7 @@ import org.hbrs.se1.ws21.uebung4.model.Expertise;
 import org.hbrs.se1.ws21.uebung4.view.table.TablePrinter;
 import org.hbrs.se1.ws21.uebung4.view.table.TablePrinterException;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,15 @@ import java.util.stream.Collectors;
  * This class is responsible for printing a list of {@link Expertise} instances organized in a table
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ExpertiseView {
-    public static void dump(List<Expertise> expertises) throws TablePrinterException {
+public final class ExpertiseView extends AbstractTableView<Expertise> {
+    private static final ExpertiseView VIEW_INSTANCE = new ExpertiseView();
+
+    public static ExpertiseView getInstance() {
+        return VIEW_INSTANCE;
+    }
+
+    @Override
+    public void dump(Collection<Expertise> expertises) throws TablePrinterException {
         if (expertises.isEmpty()) {
             System.out.println("The list of expertises is empty");
             return;

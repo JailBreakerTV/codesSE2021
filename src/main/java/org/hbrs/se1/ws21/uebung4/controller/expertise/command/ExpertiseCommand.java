@@ -38,7 +38,7 @@ public final class ExpertiseCommand extends ConsoleCommand {
             switch (args[0].toLowerCase()) {
                 case "dump" -> {
                     try {
-                        ExpertiseView.dump(this.expertiseContainer.getCurrentList());
+                        ExpertiseView.getInstance().dump(this.expertiseContainer.getCurrentList());
                     } catch (TablePrinterException e) {
                         e.printStackTrace();
                     }
