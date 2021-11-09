@@ -16,6 +16,7 @@ import java.util.Arrays;
 /*
 enter -id 1 -firstname Heinz -lastname Schmitz -role Software-Developer -department Software-Engineering-Team -expertise Java -expertise Kotlin -expertise MySQL
 enter -id 2 -firstname Peter -lastname Schmidt -role Software-Researcher -department Researching-Team -expertise Kotlin -expertise MySQL
+enter -id 0 -firstname Daniel -lastname Peter -role Software-Researcher -department Researching-Team -expertise Kotlin -expertise MySQL
  */
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
