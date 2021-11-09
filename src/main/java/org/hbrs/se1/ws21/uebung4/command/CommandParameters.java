@@ -37,6 +37,10 @@ public final class CommandParameters {
         return parameters;
     }
 
+    public boolean has(String key) {
+        return this.parameters.containsKey(key);
+    }
+
     public @Nullable Collection<Object> getCollection(String key) {
         final Object value = this.parameters.get(key);
         if (value instanceof Collection) {
