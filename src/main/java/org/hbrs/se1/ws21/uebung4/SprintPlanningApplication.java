@@ -19,6 +19,7 @@ import org.hbrs.se1.ws21.uebung4.controller.expertise.ExpertiseService;
 import org.hbrs.se1.ws21.uebung4.controller.expertise.ExpertiseServiceImpl;
 import org.hbrs.se1.ws21.uebung4.controller.expertise.command.ExpertiseCommand;
 import org.hbrs.se1.ws21.uebung4.util.ContinuousConsoleReader;
+import org.hbrs.se1.ws21.uebung4.util.SprintPlanningMessages;
 
 import java.util.Arrays;
 

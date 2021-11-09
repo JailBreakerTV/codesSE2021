@@ -1,4 +1,4 @@
-package org.hbrs.se1.ws21.uebung4;
+package org.hbrs.se1.ws21.uebung4.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

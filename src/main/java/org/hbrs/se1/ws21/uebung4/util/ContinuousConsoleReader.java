@@ -2,7 +2,6 @@ package org.hbrs.se1.ws21.uebung4.util;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.hbrs.se1.ws21.uebung4.SprintPlanningMessages;
 
 import java.util.Scanner;
 import java.util.function.Consumer;
