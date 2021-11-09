@@ -21,7 +21,20 @@ public final class DumpCommand extends ConsoleCommand {
 
     @Override
     public void execute(String[] args, CommandParameters parameters) {
-        final List<Employee> employees = new ArrayList<>(this.employeeContainer.getCurrentList());
+        final List<Employee> employees;
+        if (parameters.has("-abteilung")) {
+            final String departmentName = parameters.getString("-abteilung");
+            employees = this.employeeContainer.getCurrentList().stream()
+                    .filter(employee -> employee.getDepartment().equalsIgnoreCase(departmentName))
+                    .collect(Collectors.toList());
+        } else if (parameters.has("-expertise")) {
+            final String expertiseName = parameters.getString("-expertise");
+            employees = this.employeeContainer.getCurrentList().stream()
+                    .filter(employee -> employee.getExpertises().stream().anyMatch(expertise -> expertise.getTitle().equalsIgnoreCase(expertiseName)))
+                    .collect(Collectors.toList());
+        } else {
+            employees = new ArrayList<>(this.employeeContainer.getCurrentList());
+        }
         if (employees.isEmpty()) {
             System.out.println("Aktuell sind keine Mitarbeiter registriert");
             return;
@@ -38,7 +51,6 @@ public final class DumpCommand extends ConsoleCommand {
                         "-"
                 )
         ).collect(Collectors.toList());
-
         final Map<String, List<String>> tableContent = new HashMap<>() {{
             put("Id", ids);
             put("Firstname", firstNames);
