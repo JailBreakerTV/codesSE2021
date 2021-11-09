@@ -21,7 +21,6 @@ public class SprintPlanningApplication {
         System.out.println(SprintPlanningMessages.STARTUP_MESSAGE);
         registerCommands();
         handleCommandInputs();
-        registerShutdownHook();
     }
 
     private static void registerCommands() {
@@ -60,15 +59,5 @@ public class SprintPlanningApplication {
             }
             command.execute(commandArguments, new CommandParameters(commandArguments));
         });
-    }
-
-    private static void registerShutdownHook() {
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            try {
-                EmployeeContainer.getInstance().store();
-            } catch (PersistenceException e) {
-                e.printStackTrace();
-            }
-        }));
     }
 }
