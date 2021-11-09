@@ -2,9 +2,8 @@ package org.hbrs.se1.ws21.uebung4.expertise;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.hbrs.se1.ws21.uebung4.employee.Employee;
-import org.hbrs.se1.ws21.uebung4.util.table.TablePrinter;
-import org.hbrs.se1.ws21.uebung4.util.table.TablePrinterException;
+import org.hbrs.se1.ws21.uebung4.table.TablePrinter;
+import org.hbrs.se1.ws21.uebung4.table.TablePrinterException;
 
 import java.util.HashMap;
 import java.util.List;

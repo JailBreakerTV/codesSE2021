@@ -1,4 +1,4 @@
-package org.hbrs.se1.ws21.uebung4.util.table;
+package org.hbrs.se1.ws21.uebung4.table;
 
 /**
  * This {@link Exception} is thrown when an error occurs while printing the table

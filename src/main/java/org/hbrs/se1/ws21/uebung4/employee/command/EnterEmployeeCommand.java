@@ -1,7 +1,9 @@
-package org.hbrs.se1.ws21.uebung4.command;
+package org.hbrs.se1.ws21.uebung4.employee.command;
 
 import org.hbrs.se1.ws21.uebung2.Container;
 import org.hbrs.se1.ws21.uebung2.ContainerException;
+import org.hbrs.se1.ws21.uebung4.command.CommandParameters;
+import org.hbrs.se1.ws21.uebung4.command.ConsoleCommand;
 import org.hbrs.se1.ws21.uebung4.employee.Employee;
 import org.hbrs.se1.ws21.uebung4.employee.EmployeeContainer;
 import org.hbrs.se1.ws21.uebung4.employee.EmployeeService;

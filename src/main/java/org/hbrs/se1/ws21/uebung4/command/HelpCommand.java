@@ -1,7 +1,7 @@
 package org.hbrs.se1.ws21.uebung4.command;
 
-import org.hbrs.se1.ws21.uebung4.util.table.TablePrinter;
-import org.hbrs.se1.ws21.uebung4.util.table.TablePrinterException;
+import org.hbrs.se1.ws21.uebung4.table.TablePrinter;
+import org.hbrs.se1.ws21.uebung4.table.TablePrinterException;
 
 import java.util.*;
 import java.util.stream.Collectors;

@@ -1,6 +1,8 @@
-package org.hbrs.se1.ws21.uebung4.command;
+package org.hbrs.se1.ws21.uebung4.employee.command;
 
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceException;
+import org.hbrs.se1.ws21.uebung4.command.CommandParameters;
+import org.hbrs.se1.ws21.uebung4.command.ConsoleCommand;
 import org.hbrs.se1.ws21.uebung4.employee.Employee;
 import org.hbrs.se1.ws21.uebung4.employee.EmployeeContainer;
 

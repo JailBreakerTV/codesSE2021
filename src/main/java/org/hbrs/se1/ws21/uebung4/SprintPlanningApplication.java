@@ -9,11 +9,16 @@ import org.hbrs.se1.ws21.uebung4.employee.Employee;
 import org.hbrs.se1.ws21.uebung4.employee.EmployeeContainer;
 import org.hbrs.se1.ws21.uebung4.employee.EmployeeService;
 import org.hbrs.se1.ws21.uebung4.employee.EmployeeServiceImpl;
+import org.hbrs.se1.ws21.uebung4.employee.command.DumpCommand;
+import org.hbrs.se1.ws21.uebung4.employee.command.EnterEmployeeCommand;
+import org.hbrs.se1.ws21.uebung4.employee.command.LoadCommand;
+import org.hbrs.se1.ws21.uebung4.employee.command.StoreCommand;
 import org.hbrs.se1.ws21.uebung4.expertise.Expertise;
 import org.hbrs.se1.ws21.uebung4.expertise.ExpertiseContainer;
 import org.hbrs.se1.ws21.uebung4.expertise.ExpertiseService;
 import org.hbrs.se1.ws21.uebung4.expertise.ExpertiseServiceImpl;
-import org.hbrs.se1.ws21.uebung4.util.ConsoleReader;
+import org.hbrs.se1.ws21.uebung4.expertise.command.ExpertiseCommand;
+import org.hbrs.se1.ws21.uebung4.util.ContinuousConsoleReader;
 
 import java.util.Arrays;
 
@@ -53,7 +58,7 @@ public class SprintPlanningApplication {
     }
 
     private static void handleCommandInputs() {
-        ConsoleReader.start(input -> {
+        ContinuousConsoleReader.start(input -> {
             final String[] arguments = input.split(" ");
             final ConsoleCommand command = CommandRegistry.find(arguments[0]);
             if (command == null) {

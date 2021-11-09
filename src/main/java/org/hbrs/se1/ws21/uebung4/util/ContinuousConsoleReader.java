@@ -13,7 +13,7 @@ import java.util.function.Consumer;
  * @see System#in
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class ConsoleReader {
+public class ContinuousConsoleReader {
 
     /**
      * This function starts a new thread which is responsible for delivering the console input
