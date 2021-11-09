@@ -1,8 +1,7 @@
-package org.hbrs.se1.ws21.uebung4.expertise;
+package org.hbrs.se1.ws21.uebung4.model;
 
 import lombok.Data;
 import org.hbrs.se1.ws21.uebung2.IdAware;
-import org.hbrs.se1.ws21.uebung4.employee.Employee;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;

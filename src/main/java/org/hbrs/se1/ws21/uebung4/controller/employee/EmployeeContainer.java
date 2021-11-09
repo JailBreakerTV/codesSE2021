@@ -1,9 +1,10 @@
-package org.hbrs.se1.ws21.uebung4.employee;
+package org.hbrs.se1.ws21.uebung4.controller.employee;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.hbrs.se1.ws21.uebung2.Container;
-import org.hbrs.se1.ws21.uebung4.expertise.Expertise;
+import org.hbrs.se1.ws21.uebung4.model.Employee;
+import org.hbrs.se1.ws21.uebung4.model.Expertise;
 
 import java.util.ArrayList;
 import java.util.List;

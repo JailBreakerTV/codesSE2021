@@ -1,7 +1,7 @@
-package org.hbrs.se1.ws21.uebung4.command;
+package org.hbrs.se1.ws21.uebung4.controller;
 
-import org.hbrs.se1.ws21.uebung4.table.TablePrinter;
-import org.hbrs.se1.ws21.uebung4.table.TablePrinterException;
+import org.hbrs.se1.ws21.uebung4.view.table.TablePrinter;
+import org.hbrs.se1.ws21.uebung4.view.table.TablePrinterException;
 
 import java.util.Collection;
 import java.util.HashMap;

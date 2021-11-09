@@ -1,12 +1,10 @@
-package org.hbrs.se1.ws21.uebung4.employee.command;
+package org.hbrs.se1.ws21.uebung4.controller.employee.command;
 
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceException;
-import org.hbrs.se1.ws21.uebung4.command.CommandParameters;
-import org.hbrs.se1.ws21.uebung4.command.ConsoleCommand;
-import org.hbrs.se1.ws21.uebung4.employee.Employee;
-import org.hbrs.se1.ws21.uebung4.employee.EmployeeContainer;
-
-import java.util.Collections;
+import org.hbrs.se1.ws21.uebung4.controller.CommandParameters;
+import org.hbrs.se1.ws21.uebung4.controller.ConsoleCommand;
+import org.hbrs.se1.ws21.uebung4.model.Employee;
+import org.hbrs.se1.ws21.uebung4.controller.employee.EmployeeContainer;
 
 /**
  * This {@link ConsoleCommand} is responsible for loading the {@link Employee}s from the persistent storage

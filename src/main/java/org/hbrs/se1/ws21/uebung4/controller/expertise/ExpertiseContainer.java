@@ -1,8 +1,9 @@
-package org.hbrs.se1.ws21.uebung4.expertise;
+package org.hbrs.se1.ws21.uebung4.controller.expertise;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.hbrs.se1.ws21.uebung2.Container;
+import org.hbrs.se1.ws21.uebung4.model.Expertise;
 
 /**
  * This {@link Container} implementation is responsible for handling {@link Expertise} instances

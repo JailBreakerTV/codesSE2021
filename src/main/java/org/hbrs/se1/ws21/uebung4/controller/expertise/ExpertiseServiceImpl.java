@@ -1,6 +1,7 @@
-package org.hbrs.se1.ws21.uebung4.expertise;
+package org.hbrs.se1.ws21.uebung4.controller.expertise;
 
 import org.hbrs.se1.ws21.uebung2.ContainerException;
+import org.hbrs.se1.ws21.uebung4.model.Expertise;
 
 import java.util.Optional;
 

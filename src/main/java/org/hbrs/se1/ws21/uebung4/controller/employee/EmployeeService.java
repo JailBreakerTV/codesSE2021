@@ -1,5 +1,6 @@
-package org.hbrs.se1.ws21.uebung4.employee;
+package org.hbrs.se1.ws21.uebung4.controller.employee;
 
+import org.hbrs.se1.ws21.uebung4.model.Employee;
 import org.jetbrains.annotations.NotNull;
 
 /**

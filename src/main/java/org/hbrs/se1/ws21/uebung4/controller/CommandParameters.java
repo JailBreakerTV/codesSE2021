@@ -1,4 +1,4 @@
-package org.hbrs.se1.ws21.uebung4.command;
+package org.hbrs.se1.ws21.uebung4.controller;
 
 import org.hbrs.se1.ws21.uebung4.util.MergingMap;
 import org.hbrs.se1.ws21.uebung4.util.NumberConversions;

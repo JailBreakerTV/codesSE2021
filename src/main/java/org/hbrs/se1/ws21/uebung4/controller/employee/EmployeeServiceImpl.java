@@ -1,7 +1,8 @@
-package org.hbrs.se1.ws21.uebung4.employee;
+package org.hbrs.se1.ws21.uebung4.controller.employee;
 
 import lombok.RequiredArgsConstructor;
 import org.hbrs.se1.ws21.uebung2.Container;
+import org.hbrs.se1.ws21.uebung4.model.Employee;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.ThreadLocalRandom;

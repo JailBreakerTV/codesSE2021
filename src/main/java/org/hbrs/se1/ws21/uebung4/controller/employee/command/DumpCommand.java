@@ -1,13 +1,13 @@
-package org.hbrs.se1.ws21.uebung4.employee.command;
+package org.hbrs.se1.ws21.uebung4.controller.employee.command;
 
-import org.hbrs.se1.ws21.uebung4.command.CommandParameters;
-import org.hbrs.se1.ws21.uebung4.command.ConsoleCommand;
-import org.hbrs.se1.ws21.uebung4.employee.Employee;
-import org.hbrs.se1.ws21.uebung4.employee.EmployeeContainer;
-import org.hbrs.se1.ws21.uebung4.employee.EmployeeView;
-import org.hbrs.se1.ws21.uebung4.expertise.Expertise;
-import org.hbrs.se1.ws21.uebung4.expertise.ExpertiseService;
-import org.hbrs.se1.ws21.uebung4.table.TablePrinterException;
+import org.hbrs.se1.ws21.uebung4.controller.CommandParameters;
+import org.hbrs.se1.ws21.uebung4.controller.ConsoleCommand;
+import org.hbrs.se1.ws21.uebung4.model.Employee;
+import org.hbrs.se1.ws21.uebung4.controller.employee.EmployeeContainer;
+import org.hbrs.se1.ws21.uebung4.view.EmployeeView;
+import org.hbrs.se1.ws21.uebung4.model.Expertise;
+import org.hbrs.se1.ws21.uebung4.controller.expertise.ExpertiseService;
+import org.hbrs.se1.ws21.uebung4.view.table.TablePrinterException;
 
 import java.util.Collections;
 import java.util.List;

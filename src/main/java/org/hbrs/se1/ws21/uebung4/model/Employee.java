@@ -1,8 +1,7 @@
-package org.hbrs.se1.ws21.uebung4.employee;
+package org.hbrs.se1.ws21.uebung4.model;
 
 import lombok.Data;
 import org.hbrs.se1.ws21.uebung2.Member;
-import org.hbrs.se1.ws21.uebung4.expertise.Expertise;
 import org.hbrs.se1.ws21.uebung4.util.CollectionUtil;
 import org.jetbrains.annotations.NotNull;
 
