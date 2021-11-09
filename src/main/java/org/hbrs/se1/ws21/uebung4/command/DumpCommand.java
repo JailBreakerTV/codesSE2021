@@ -6,10 +6,7 @@ import org.hbrs.se1.ws21.uebung4.expertise.Expertise;
 import org.hbrs.se1.ws21.uebung4.util.table.TablePrinter;
 import org.hbrs.se1.ws21.uebung4.util.table.TablePrinterException;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.hbrs.se1.ws21.uebung4.util.CollectionUtil.joinToString;
@@ -24,11 +21,12 @@ public final class DumpCommand extends ConsoleCommand {
 
     @Override
     public void execute(String[] args, CommandParameters parameters) {
-        final List<Employee> employees = this.employeeContainer.getCurrentList();
+        final List<Employee> employees = new ArrayList<>(this.employeeContainer.getCurrentList());
         if (employees.isEmpty()) {
             System.out.println("Aktuell sind keine Mitarbeiter registriert");
             return;
         }
+        Collections.sort(employees);
         final List<String> ids = employees.stream().map(Employee::getId).map(Object::toString).collect(Collectors.toList());
         final List<String> firstNames = employees.stream().map(Employee::getFirstName).collect(Collectors.toList());
         final List<String> lastNames = employees.stream().map(Employee::getLastName).collect(Collectors.toList());
