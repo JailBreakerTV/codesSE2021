@@ -30,7 +30,7 @@ public final class DumpCommand extends ConsoleCommand {
     private final EmployeeContainer employeeContainer;
 
     public DumpCommand(EmployeeContainer employeeContainer, ExpertiseService expertiseService) {
-        super("dump", "Gibt alle vorhandene Mitarbeiter aus", Collections.singleton("ausgabe"));
+        super("dump", "This command displays a list of all existing employees");
         this.employeeContainer = employeeContainer;
         this.expertiseService = expertiseService;
     }
@@ -42,7 +42,7 @@ public final class DumpCommand extends ConsoleCommand {
                 this.expertiseService.findExpertiseByTitle(parameters.getString("-expertise")).map(Collections::singletonList).orElse(null)
         );
         if (employees.isEmpty()) {
-            System.out.println("Aktuell sind keine Mitarbeiter registriert");
+            System.out.println("Currently there are no employees registered in the sprint planning application");
             return;
         }
         Collections.sort(employees);

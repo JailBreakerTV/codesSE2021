@@ -12,8 +12,6 @@ import org.hbrs.se1.ws21.uebung4.expertise.ExpertiseService;
 import org.hbrs.se1.ws21.uebung4.expertise.ExpertiseView;
 import org.hbrs.se1.ws21.uebung4.table.TablePrinterException;
 
-import java.util.Collections;
-
 /**
  * This {@link ConsoleCommand} is responsible for creating/removing/listing {@link Expertise}s
  */
@@ -29,7 +27,7 @@ public final class ExpertiseCommand extends ConsoleCommand {
     private final ExpertiseContainer expertiseContainer;
 
     public ExpertiseCommand(ExpertiseService expertiseService, ExpertiseContainer expertiseContainer) {
-        super("expertise", "Verwaltet alle Expertisen", Collections.emptySet());
+        super("expertise", "This command can save new expertises, delete existing ones or load them from or into the persistence store");
         this.expertiseService = expertiseService;
         this.expertiseContainer = expertiseContainer;
     }
@@ -46,65 +44,67 @@ public final class ExpertiseCommand extends ConsoleCommand {
                     }
                 }
                 case "load" -> {
-                    System.out.println("[BEGINN] Laden der Expertisen");
+                    System.out.println("The expertises are loaded from the persistence store");
                     try {
                         this.expertiseContainer.load();
-                        System.out.println("[ENDE] Expertisen erfolgreich geladen");
+                        System.out.println("The expertises were successfully loaded from the persistence store");
                     } catch (PersistenceException e) {
                         e.printStackTrace();
                     }
                 }
                 case "store" -> {
-                    System.out.println("[BEGINN] Speichern der Expertisen");
+                    System.out.println("The expertises will now be persisted");
                     try {
                         this.expertiseContainer.store();
-                        System.out.println("[ENDE] Expertisen erfolgreich gespeichert");
+                        System.out.println("The expertises were successfully persisted");
                     } catch (PersistenceException e) {
                         e.printStackTrace();
                     }
                 }
                 default -> {
-                    System.out.println("Verwendung: expertise load");
-                    System.out.println("Verwendung: expertise store");
+                    System.out.println("Please use 'expertise load' to load the expertise from the persistence store");
+                    System.out.println("Please use 'expertise store' to persist the expertises");
                 }
             }
         } else if (args.length == 3 && args[0].equalsIgnoreCase("remove")) {
             final Integer id = parameters.getInteger("-id");
             if (id != null) {
                 if (this.expertiseService.removeExpertiseById(id)) {
-                    System.out.printf("Die Expertise mit der Id '%s' wurde entfernt%n", id);
+                    System.out.printf("The expertise with the id '%s' was successfully removed%n", id);
                 } else {
-                    System.out.printf("Unter der Id '%s' existiert keine Expertise%n", id);
+                    System.out.printf("No expertise exists for the specified Id '%s'.%n", id);
                 }
                 return;
             }
             final String title = parameters.getString("-title");
             if (title != null) {
                 if (this.expertiseService.removeExpertiseByString(title)) {
-                    System.out.printf("Die Expertise mit dem Titel '%s' wurde entfernt%n", title);
+                    System.out.printf("The expertise with the title '%s' was successfully removed%n", id);
                 } else {
-                    System.out.printf("Unter dem Titel '%s' existiert keine Expertise%n", title);
+                    System.out.printf("No expertise exists for the specified title '%s'.%n", id);
                 }
                 return;
             }
-            System.out.println("Es kann keine Expertise entfernt werden, wenn keine Schlüssel angegeben werden");
-            System.out.println("Verwendung: expertise remove -id <Id>");
-            System.out.println("Verwendung: expertise remove -title <Title>");
+            System.out.println("No expertise can be removed if no keys are specified");
+            System.out.println("Please use 'expertise remove -id <Id>' to delete an expertise by its id");
+            System.out.println("Please use 'expertise remove -title <Title>' to delete an expertise by its title");
         } else if (args.length == 5 && args[0].equalsIgnoreCase("add")) {
             final Integer id = parameters.getInteger("-id");
             if (id == null) {
-                System.err.println("Es muss eine Id mit '-id <Id>' übergeben werden");
+                System.err.println("An Id for new expertises must be specified");
+                System.out.println("Please add a unique id for this expertise with the argument '-id <Id>'.");
                 return;
             }
             final String title = parameters.getString("-title");
             if (title == null) {
-                System.err.println("Es muss ein Titel mit '-title <Titel>' übergeben werden");
+                System.err.println("A Title for new expertises must be specified");
+                System.out.println("Please add a title for this expertise with the argument '-title <Title>'.");
                 return;
             }
             final Expertise expertise = new Expertise(id, title);
             try {
                 this.expertiseService.addExpertise(expertise);
-                System.out.printf("Expertise %s hinzugefügt%n", expertise);
+                System.out.printf("The expertise '%s' was successfully added%n", expertise);
             } catch (ContainerException e) {
                 e.printStackTrace();
             }
@@ -112,8 +112,8 @@ public final class ExpertiseCommand extends ConsoleCommand {
             System.out.println("Verwendung expertise add -id <Id> -title <Title>");
             System.out.println("Verwendung expertise remove -id <Id>");
             System.out.println("Verwendung expertise remove -title <Title>");
-            System.out.println("Verwendung expertise load");
-            System.out.println("Verwendung expertise store");
+            System.out.println("Use 'expertise load' to load the expertise from the persistence store");
+            System.out.println("Use 'expertise store' to persist the expertises");
         }
     }
 }

@@ -13,7 +13,7 @@ import static org.hbrs.se1.ws21.uebung4.util.CollectionUtil.joinToString;
  */
 public final class HelpCommand extends ConsoleCommand {
     public HelpCommand() {
-        super("help", "Lists alle Befehle mit ihren Beschreibungen auf", Set.of("hilfe"));
+        super("help", "This command lists all existing commands with their descriptions");
     }
 
     @Override
@@ -22,11 +22,10 @@ public final class HelpCommand extends ConsoleCommand {
         final List<String> names = snapshot.stream().map(ConsoleCommand::getName).collect(Collectors.toList());
         final List<String> aliases = snapshot.stream().map(command -> joinToString(command.getAliases(), ", ", "-")).collect(Collectors.toList());
         final List<String> descriptions = snapshot.stream().map(ConsoleCommand::getDescription).collect(Collectors.toList());
-
         final Map<String, List<String>> columnsAndRows = new HashMap<>();
-        columnsAndRows.put("Befehl", names);
+        columnsAndRows.put("Command", names);
         columnsAndRows.put("Aliases", aliases);
-        columnsAndRows.put("Beschreibung", descriptions);
+        columnsAndRows.put("Description", descriptions);
         try {
             TablePrinter.printTable(columnsAndRows);
         } catch (TablePrinterException e) {

@@ -18,20 +18,16 @@ public final class StoreCommand extends ConsoleCommand {
     private final EmployeeContainer employeeContainer;
 
     public StoreCommand(EmployeeContainer employeeContainer) {
-        super(
-                "store",
-                "Speichert die im Arbeitsspeicher hinterlegten Mitarbeiter auf einer persistenten Struktur",
-                Collections.emptySet()
-        );
+        super("store", "Saves the employees stored in memory on a persistent structure");
         this.employeeContainer = employeeContainer;
     }
 
     @Override
     public void execute(String[] args, CommandParameters parameters) {
-        System.out.println("[BEGINN] Speichern der Mitarbeiter");
+        System.out.println("The employees will now be persisted");
         try {
             this.employeeContainer.store();
-            System.out.println("[ENDE] Mitarbeiter erfolgreich gespeichert");
+            System.out.println("The employees were successfully persisted");
         } catch (PersistenceException e) {
             e.printStackTrace();
         }

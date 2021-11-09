@@ -33,6 +33,9 @@ public final class EmployeeView {
         final List<String> lastNames = employees.stream()
                 .map(Employee::getLastName)
                 .collect(Collectors.toList());
+        final List<String> roles = employees.stream()
+                .map(Employee::getRole)
+                .collect(Collectors.toList());
         final List<String> departments = employees.stream()
                 .map(Employee::getDepartment)
                 .collect(Collectors.toList());
@@ -47,6 +50,7 @@ public final class EmployeeView {
             put("Id", ids);
             put("Firstname", firstNames);
             put("Lastname", lastNames);
+            put("Role", roles);
             put("Department", departments);
             put("Expertises", expertises);
         }};

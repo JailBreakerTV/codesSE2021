@@ -18,20 +18,16 @@ public final class LoadCommand extends ConsoleCommand {
     private final EmployeeContainer employeeContainer;
 
     public LoadCommand(EmployeeContainer employeeContainer) {
-        super(
-                "load",
-                "Lädt die abgespeicherten Mitarbeiter in den Arbeitsspeicher",
-                Collections.emptySet()
-        );
+        super("load", "Loads the saved employees into the memory");
         this.employeeContainer = employeeContainer;
     }
 
     @Override
     public void execute(String[] args, CommandParameters parameters) {
-        System.out.println("[BEGINN] Laden der Mitarbeiter");
+        System.out.println("The employees are loaded from the persistence store");
         try {
             this.employeeContainer.load();
-            System.out.println("[ENDE] Mitarbeiter erfolgreich geladen");
+            System.out.println("The employees were successfully loaded from the persistence store");
         } catch (PersistenceException e) {
             e.printStackTrace();
         }

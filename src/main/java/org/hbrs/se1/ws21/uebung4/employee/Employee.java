@@ -38,6 +38,11 @@ public class Employee implements Member, Serializable, Comparable<Employee> {
     private String lastName;
 
     /**
+     * The role of this employee
+     */
+    private String role;
+
+    /**
      * The department of this employee
      */
     private String department;
