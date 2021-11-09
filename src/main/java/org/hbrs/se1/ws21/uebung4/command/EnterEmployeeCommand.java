@@ -5,6 +5,7 @@ import org.hbrs.se1.ws21.uebung2.Container;
 import org.hbrs.se1.ws21.uebung2.ContainerException;
 import org.hbrs.se1.ws21.uebung4.employee.Employee;
 import org.hbrs.se1.ws21.uebung4.employee.EmployeeService;
+import org.hbrs.se1.ws21.uebung4.expertise.Expertise;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -54,6 +55,13 @@ public class EnterEmployeeCommand extends ConsoleCommand {
         }
         try {
             final Employee employee = this.employeeService.create(id);
+            employee.setFirstName(firstName);
+            employee.setLastName(lastName);
+            employee.setDepartment(department);
+            expertises.stream()
+                    .map(Object::toString)
+                    .map(expertiseName -> new Expertise(0, expertiseName))
+                    .forEach(expertise -> employee.getExpertises().add(expertise));
             this.employeeContainer.addMember(employee);
             log.info("Der Mitarbeiter mit der Id " + employee.getId() + " wurde hinzugefügt");
         } catch (ContainerException e) {
