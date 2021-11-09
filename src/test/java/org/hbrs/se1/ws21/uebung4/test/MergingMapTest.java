@@ -28,11 +28,8 @@ public class MergingMapTest {
         this.userNames.put("user_name", "GHI");
         assertEquals(1, this.userNames.size());
         assertInstanceOf(Collection.class, this.userNames.get("user_name"));
-
         final Collection<Object> internUserNames = this.userNames.getCollection("user_name");
         assertNotNull(internUserNames);
         assertEquals(3, internUserNames.size());
-
-        internUserNames.forEach(System.out::println);
     }
 }

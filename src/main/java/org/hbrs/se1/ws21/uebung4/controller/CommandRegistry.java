@@ -68,7 +68,7 @@ public final class CommandRegistry {
      * @return ConsoleCommand if there exists any or null if there is no command available
      * @throws NullPointerException when the given name is null
      */
-    public static @Nullable ConsoleCommand find(@Nullable String name) {
+    public static @Nullable ConsoleCommand discover(@Nullable String name) {
         if (name == null) {
             throw new NullPointerException("Name can not be null");
         }

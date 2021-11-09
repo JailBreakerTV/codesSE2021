@@ -61,7 +61,7 @@ public class SprintPlanningApplication {
     private static void handleCommandInputs() {
         ContinuousConsoleReader.start(input -> {
             final String[] arguments = input.split(" ");
-            final ConsoleCommand command = CommandRegistry.find(arguments[0]);
+            final ConsoleCommand command = CommandRegistry.discover(arguments[0]);
             if (command == null) {
                 System.out.println("Use 'help' to list all available commands");
                 return;
