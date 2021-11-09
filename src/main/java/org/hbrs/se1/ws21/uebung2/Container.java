@@ -51,7 +51,7 @@ public abstract class Container<E extends IdAware> {
         if (this.strategy == null) {
             throw new PersistenceException(ExceptionType.NO_STRATEGY_IS_SET, "There is no strategy");
         }
-        this.strategy.save(this.getCurrentList());
+        this.strategy.save(this.members);
     }
 
     /**
