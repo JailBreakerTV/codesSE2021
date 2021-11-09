@@ -2,6 +2,7 @@ package org.hbrs.se1.ws21.uebung4.expertise;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.hbrs.se1.ws21.uebung4.employee.Employee;
 import org.hbrs.se1.ws21.uebung4.util.table.TablePrinter;
 import org.hbrs.se1.ws21.uebung4.util.table.TablePrinterException;
 
@@ -10,6 +11,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * This class is responsible for printing a list of {@link Expertise} instances organized in a table
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ExpertiseView {
     public static void dump(List<Expertise> expertises) throws TablePrinterException {

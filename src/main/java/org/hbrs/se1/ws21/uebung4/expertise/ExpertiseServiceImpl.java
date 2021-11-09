@@ -29,12 +29,12 @@ public final class ExpertiseServiceImpl implements ExpertiseService {
     }
 
     @Override
-    public boolean removeExpertise(Integer id) {
+    public boolean removeExpertiseById(Integer id) {
         return this.expertiseContainer.deleteMember(id);
     }
 
     @Override
-    public boolean removeExpertise(String title) {
-        return this.findExpertiseByTitle(title).map(expertise -> this.removeExpertise(expertise.getId())).orElse(false);
+    public boolean removeExpertiseByString(String title) {
+        return this.findExpertiseByTitle(title).map(expertise -> this.removeExpertiseById(expertise.getId())).orElse(false);
     }
 }

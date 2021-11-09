@@ -1,6 +1,5 @@
 package org.hbrs.se1.ws21.uebung4.command;
 
-import lombok.extern.java.Log;
 import org.hbrs.se1.ws21.uebung4.util.table.TablePrinter;
 import org.hbrs.se1.ws21.uebung4.util.table.TablePrinterException;
 
@@ -9,7 +8,9 @@ import java.util.stream.Collectors;
 
 import static org.hbrs.se1.ws21.uebung4.util.CollectionUtil.joinToString;
 
-@Log
+/**
+ * This {@link ConsoleCommand} is responsible for delivering all the existing {@link ConsoleCommand} to the executor
+ */
 public final class HelpCommand extends ConsoleCommand {
     public HelpCommand() {
         super("help", "Lists alle Befehle mit ihren Beschreibungen auf", Set.of("hilfe"));

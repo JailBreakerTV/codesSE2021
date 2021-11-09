@@ -13,6 +13,9 @@ import java.util.stream.Collectors;
 
 import static org.hbrs.se1.ws21.uebung4.util.CollectionUtil.joinToString;
 
+/**
+ * This class is responsible for printing a list of {@link Employee} instances organized in a table
+ */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class EmployeeView {
     public static void dump(List<Employee> employees) throws TablePrinterException {

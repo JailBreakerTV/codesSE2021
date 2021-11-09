@@ -3,17 +3,28 @@ package org.hbrs.se1.ws21.uebung4.command;
 import org.hbrs.se1.ws21.uebung2.Container;
 import org.hbrs.se1.ws21.uebung2.ContainerException;
 import org.hbrs.se1.ws21.uebung4.employee.Employee;
+import org.hbrs.se1.ws21.uebung4.employee.EmployeeContainer;
 import org.hbrs.se1.ws21.uebung4.employee.EmployeeService;
 import org.hbrs.se1.ws21.uebung4.expertise.Expertise;
 
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * This {@link ConsoleCommand} is responsible for the creation of new {@link Employee} entries
+ */
 public final class EnterEmployeeCommand extends ConsoleCommand {
+    /**
+     * The {@link EmployeeService} which provides useful functions for handling {@link Employee}s
+     */
     private final EmployeeService employeeService;
-    private final Container<Employee> employeeContainer;
 
-    public EnterEmployeeCommand(EmployeeService employeeService, Container<Employee> employeeContainer) {
+    /**
+     * The {@link EmployeeContainer} which contains all existing {@link Employee}s
+     */
+    private final EmployeeContainer employeeContainer;
+
+    public EnterEmployeeCommand(EmployeeService employeeService, EmployeeContainer employeeContainer) {
         super("enter", "Dieser Befehl fügt neue Mitarbeiter hinzu", Collections.emptySet());
         this.employeeService = employeeService;
         this.employeeContainer = employeeContainer;

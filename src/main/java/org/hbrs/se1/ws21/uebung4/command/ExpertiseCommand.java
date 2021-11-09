@@ -2,6 +2,8 @@ package org.hbrs.se1.ws21.uebung4.command;
 
 import org.hbrs.se1.ws21.uebung2.ContainerException;
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceException;
+import org.hbrs.se1.ws21.uebung4.employee.Employee;
+import org.hbrs.se1.ws21.uebung4.employee.EmployeeContainer;
 import org.hbrs.se1.ws21.uebung4.expertise.Expertise;
 import org.hbrs.se1.ws21.uebung4.expertise.ExpertiseContainer;
 import org.hbrs.se1.ws21.uebung4.expertise.ExpertiseService;
@@ -10,8 +12,18 @@ import org.hbrs.se1.ws21.uebung4.util.table.TablePrinterException;
 
 import java.util.Collections;
 
+/**
+ * This {@link ConsoleCommand} is responsible for creating/removing/listing {@link Expertise}s
+ */
 public final class ExpertiseCommand extends ConsoleCommand {
+    /**
+     * The {@link ExpertiseService} which handle some useful operations in relation to {@link Expertise}s
+     */
     private final ExpertiseService expertiseService;
+
+    /**
+     * The {@link EmployeeContainer} which contains all existing {@link Employee}s
+     */
     private final ExpertiseContainer expertiseContainer;
 
     public ExpertiseCommand(ExpertiseService expertiseService, ExpertiseContainer expertiseContainer) {
@@ -57,7 +69,7 @@ public final class ExpertiseCommand extends ConsoleCommand {
         } else if (args.length == 3 && args[0].equalsIgnoreCase("remove")) {
             final Integer id = parameters.getInteger("-id");
             if (id != null) {
-                if (this.expertiseService.removeExpertise(id)) {
+                if (this.expertiseService.removeExpertiseById(id)) {
                     System.out.printf("Die Expertise mit der Id '%s' wurde entfernt%n", id);
                 } else {
                     System.out.printf("Unter der Id '%s' existiert keine Expertise%n", id);
@@ -66,7 +78,7 @@ public final class ExpertiseCommand extends ConsoleCommand {
             }
             final String title = parameters.getString("-title");
             if (title != null) {
-                if (this.expertiseService.removeExpertise(title)) {
+                if (this.expertiseService.removeExpertiseByString(title)) {
                     System.out.printf("Die Expertise mit dem Titel '%s' wurde entfernt%n", title);
                 } else {
                     System.out.printf("Unter dem Titel '%s' existiert keine Expertise%n", title);

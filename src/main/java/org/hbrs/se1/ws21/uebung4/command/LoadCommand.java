@@ -1,15 +1,21 @@
 package org.hbrs.se1.ws21.uebung4.command;
 
-import org.hbrs.se1.ws21.uebung2.Container;
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceException;
 import org.hbrs.se1.ws21.uebung4.employee.Employee;
+import org.hbrs.se1.ws21.uebung4.employee.EmployeeContainer;
 
 import java.util.Collections;
 
+/**
+ * This {@link ConsoleCommand} is responsible for loading the {@link Employee}s from the persistent storage
+ */
 public final class LoadCommand extends ConsoleCommand {
-    private final Container<Employee> employeeContainer;
+    /**
+     * The {@link EmployeeContainer} which contains all existing {@link Employee}s
+     */
+    private final EmployeeContainer employeeContainer;
 
-    public LoadCommand(Container<Employee> employeeContainer) {
+    public LoadCommand(EmployeeContainer employeeContainer) {
         super(
                 "load",
                 "Lädt die abgespeicherten Mitarbeiter in den Arbeitsspeicher",
