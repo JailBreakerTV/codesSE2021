@@ -5,14 +5,11 @@ import lombok.NoArgsConstructor;
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceStrategy;
 import org.hbrs.se1.ws21.uebung3.persistence.PersistenceStrategyStream;
 import org.hbrs.se1.ws21.uebung4.controller.*;
+import org.hbrs.se1.ws21.uebung4.controller.employee.command.*;
 import org.hbrs.se1.ws21.uebung4.model.Employee;
 import org.hbrs.se1.ws21.uebung4.controller.employee.EmployeeContainer;
 import org.hbrs.se1.ws21.uebung4.controller.employee.EmployeeService;
 import org.hbrs.se1.ws21.uebung4.controller.employee.EmployeeServiceImpl;
-import org.hbrs.se1.ws21.uebung4.controller.employee.command.DumpCommand;
-import org.hbrs.se1.ws21.uebung4.controller.employee.command.EnterEmployeeCommand;
-import org.hbrs.se1.ws21.uebung4.controller.employee.command.LoadCommand;
-import org.hbrs.se1.ws21.uebung4.controller.employee.command.StoreCommand;
 import org.hbrs.se1.ws21.uebung4.model.Expertise;
 import org.hbrs.se1.ws21.uebung4.controller.expertise.ExpertiseContainer;
 import org.hbrs.se1.ws21.uebung4.controller.expertise.ExpertiseService;
@@ -49,6 +46,7 @@ public class SprintPlanningApplication {
         final EmployeeService employeeService = new EmployeeServiceImpl(employeeContainer);
         final ExpertiseService expertiseService = new ExpertiseServiceImpl(expertiseContainer);
 
+        CommandRegistry.register(new SearchCommand(employeeContainer));
         CommandRegistry.register(new ExpertiseCommand(expertiseService, expertiseContainer));
         CommandRegistry.register(new DumpCommand(employeeContainer, expertiseService));
         CommandRegistry.register(new EnterEmployeeCommand(employeeService, employeeContainer, expertiseService));
